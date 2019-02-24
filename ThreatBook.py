@@ -3,7 +3,7 @@ import base64
 
 import requests
 
-HOST = "http://202.115.103.60"
+HOST = "http://202.115.103.60:81"
 
 
 # 发票二维码识别接口
@@ -39,5 +39,5 @@ def run_type():
 
 
 if __name__ == '__main__':
-    # print(run_qrcode())
+    print(run_qrcode())
     print(run_type())
