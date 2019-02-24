@@ -22,7 +22,6 @@ class InvoiTypeRecog():
         else:
             caffe.set_mode_cpu()
 
-        tim = timewatch.start_new()
         self.model_def = model_def
         self.model_weights = model_weights
         self.net = caffe.Net(model_def, model_weights, caffe.TEST)
@@ -36,9 +35,7 @@ class InvoiTypeRecog():
         self.threshold = 0.5
 
     def __call__(self, image):
-        # tim = timewatch.start_new()
         self.predictions = self.recog(image)
-        # print("Type Recognization Done in : ", tim.get_elapsed_seconds(), " seconds")
         return self.type
 
     def recog(self, image):
@@ -53,7 +50,6 @@ class InvoiTypeRecog():
         prob = net.blobs['prob'].data[0].flatten()
         if np.max(prob) > self.threshold:
             self.type = np.argmax(prob)
-            print('class: ', invoice_type[self.type])
         else:
             self.type = -1
             print('No Invoice Found.')
@@ -75,4 +71,6 @@ if __name__ == "__main__":
     invoice_type = ['quota', 'elect', 'airticket', 'spec_and_normal', 'spec_and_normal_bw', 'trainticket']
     for im_name in im_names:
         im = caffe.io.load_image(im_name)
-        recog(im)
+        index = recog(im)
+        if index > 0:
+            print(invoice_type[index])
