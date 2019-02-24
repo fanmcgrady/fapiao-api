@@ -1,24 +1,13 @@
-import sys
-
 # 设置只用前两个GPU
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 
 import API
-
 import datetime
 import json
 import base64
 
-from django.http import HttpResponse
 from django.http import JsonResponse
-from django.shortcuts import render
-
-import shutil
-import traceback
-from .models import Bug
-from .models import BugTwo
-from .models import BugThree
 
 
 # API

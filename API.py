@@ -8,7 +8,6 @@ from gaolin.scanQRCode.scan_qrcode import recog_qrcode, recog_qrcode_ex
 
 # 分类
 from gaolin.recogType import recog_invoice_type_usecv
-from gaolin.recogType import recog_invoice_type
 
 def getArrayFromStr(strRes):
     sR = copy.deepcopy(strRes)
@@ -67,6 +66,7 @@ def runQR(filepath):
 # 识别类型
 def runType(filepath):
     try:
+        from gaolin.recogType import recog_invoice_type
         recog = recog_invoice_type.InvoiTypeRecog()
         import caffe
         im = caffe.io.load_image(filepath)
