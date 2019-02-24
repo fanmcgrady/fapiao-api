@@ -4,7 +4,6 @@ import cv2
 
 # 二维码
 from gaolin.scanQRCode import JsonInterface
-from gaolin.scanQRCode.scan_qrcode import recog_qrcode, recog_qrcode_ex
 
 # 分类
 from gaolin.recogType import recog_invoice_type_usecv
@@ -22,6 +21,8 @@ def getArrayFromStr(strRes):
 
 
 def scanQRc(filepath):
+    from gaolin.scanQRCode.scan_qrcode import recog_qrcode, recog_qrcode_ex
+
     image = cv2.imread(filepath, 0)
 
     str_info, position, state = recog_qrcode(image, roi=None)
