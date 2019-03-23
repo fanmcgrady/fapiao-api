@@ -74,7 +74,7 @@ def Type_API(request):
 
         try:
             # 识别 给前端传值
-            type = API.runTypeWithCV(full_path)
+            type = API.runType(full_path)
             # ['quota', 'elect', 'airticket', 'special', 'trainticket']
             # 01 *增值税专用发票
             # 02 货运运输业增值税专用发票

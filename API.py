@@ -6,7 +6,10 @@ import cv2
 from gaolin.scanQRCode import JsonInterface
 
 # 分类
-from gaolin.recogType import recog_invoice_type_usecv
+# 加载fp
+import sys
+sys.path.append("/home/ocr/fapiao/fp/fp")
+from fp.TextBoxes import recog_invoice_type
 
 def getArrayFromStr(strRes):
     sR = copy.deepcopy(strRes)
@@ -72,26 +75,7 @@ def runType(filepath):
         import caffe
         im = caffe.io.load_image(filepath)
 
-        invoice_type = ['quota', 'elect', 'airticket', 'spec_and_normal', 'spec_and_normal_bw', 'trainticket']
-        index = recog(im)
-        if index < 0:
-            return "other"
-        typeP = invoice_type[index]
-    except:
-        return "other"
-
-    if typeP == 'spec_and_normal' or typeP == 'spec_and_normal_bw':
-        typeP = 'special'
-
-    return typeP
-
-# 识别类型使用opencv
-def runTypeWithCV(filepath):
-    try:
-        recog = recog_invoice_type_usecv.InvoiTypeRecog()
-        im = cv2.imread(filepath)
-
-        invoice_type = ['quota', 'elect', 'airticket', 'spec_and_normal', 'spec_and_normal_bw', 'trainticket']
+        invoice_type = ['other', 'spec_and_normal']
         index = recog(im)
         if index < 0:
             return "other"

@@ -3,7 +3,7 @@ import base64
 
 import requests
 
-HOST = "http://202.115.103.60:81"
+HOST = "http://202.115.103.60"
 
 
 # 发票二维码识别接口
@@ -27,6 +27,7 @@ def run_type():
     file_name = "Image_00175.jpg"
     with open(file_name, "rb") as f:
         base64_data = base64.b64encode(f.read())
+        print(base64_data)
 
     params = {
         'picture': base64_data
@@ -39,3 +40,4 @@ def run_type():
 if __name__ == '__main__':
     # print(run_qrcode())
     print(run_type())
+
