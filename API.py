@@ -8,7 +8,7 @@ from gaolin.scanQRCode import JsonInterface
 # 分类
 # 加载fp
 import sys
-sys.path.append("/home/ocr/fapiao/fp/fp")
+sys.path.append("/home/ocr/fapiao/fp")
 from fp.TextBoxes import recog_invoice_type
 
 def getArrayFromStr(strRes):
