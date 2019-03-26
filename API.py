@@ -77,6 +77,7 @@ def runType(filepath):
 
         invoice_type = ['other', 'spec_and_normal']
         index = recog(im)
+        print("recog index: {}".format(index))
         if index < 0:
             return "other"
         typeP = invoice_type[index]
