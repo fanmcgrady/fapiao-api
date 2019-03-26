@@ -70,7 +70,6 @@ def runQR(filepath):
 # 识别类型
 def runType(filepath):
     try:
-        from gaolin.recogType import recog_invoice_type
         recog = recog_invoice_type.InvoiTypeRecog()
         import caffe
         im = caffe.io.load_image(filepath)
