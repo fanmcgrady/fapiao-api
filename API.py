@@ -51,7 +51,8 @@ def runQR(filepath):
     try:
         info, position = scanQRc(filepath)
         print("info: {}, position: {}".format(info, position))
-    except:
+    except Exception as e:
+        print(e)
         return None
 
     if info != '':
@@ -81,7 +82,8 @@ def runType(filepath):
         if index < 0:
             return "other"
         typeP = invoice_type[index]
-    except:
+    except Exception as e:
+        print(e)
         return "other"
 
     if typeP == 'spec_and_normal' or typeP == 'spec_and_normal_bw':
