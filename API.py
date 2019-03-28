@@ -50,6 +50,7 @@ def scanQRc(filepath):
 def runQR(filepath):
     try:
         info, position = scanQRc(filepath)
+        print("info: {}, position: {}".format(info, position))
     except:
         return None
 
