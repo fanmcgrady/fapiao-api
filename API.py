@@ -94,4 +94,5 @@ def runType(filepath):
 
 if __name__ == '__main__':
     filepath = "Image_00175.jpg"
-    runType(filepath)
+    #runType(filepath)
+    runQR(filepath)
