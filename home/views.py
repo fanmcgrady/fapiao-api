@@ -65,16 +65,19 @@ def QR_API(request):
 
 def Type_API(request):
     if request.method == "POST":
-        base64_data = request.POST['picture']
-        # 随机文件名
-        filename, _ = generate_random_name()
-        # 拼接存放位置路径
-        file_path = os.path.join('upload', filename)
-        full_path = os.path.join('allstatic', file_path)
+        try:
+            base64_data = request.POST['picture']
+            # 随机文件名
+            filename, _ = generate_random_name()
+            # 拼接存放位置路径
+            file_path = os.path.join('upload', filename)
+            full_path = os.path.join('allstatic', file_path)
 
-        # 文件写入
-        with open(full_path, "wb") as f:
-            f.write(base64.b64decode(base64_data))
+            # 文件写入
+            with open(full_path, "wb") as f:
+                f.write(base64.b64decode(base64_data))
+        except Exception as e:
+            traceback.print_exc()
 
         try:
             # 识别 给前端传值
