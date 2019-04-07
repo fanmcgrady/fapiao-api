@@ -5,6 +5,7 @@ import os
 import time
 
 import cv2
+from TicToc import Timer
 
 # 二维码
 from gaolin.scanQRCode import JsonInterface
@@ -72,11 +73,18 @@ def runQR(filepath):
 
 # 识别类型
 def runType(filepath):
+    timer = Timer()
+    timer.tic()
+
     try:
+        timer.toc("1")
         im = caffe.io.load_image(filepath)
+        timer.toc("2")
 
         invoice_type = ['other', 'spec_and_normal']
+        timer.toc("3")
         index = views.global_recog(im)
+        timer.toc("4")
         print("recog index: {}".format(index))
         if index < 0:
             return "other"
@@ -88,6 +96,7 @@ def runType(filepath):
     if typeP == 'spec_and_normal' or typeP == 'spec_and_normal_bw':
         typeP = 'special'
 
+    timer.toc("5")
     return typeP
 
 
