@@ -2,16 +2,17 @@ import copy
 import glob
 import json
 import os
+import sys
 import time
 
 import cv2
-from TicToc import Timer
+import numpy as np
 
+from TicToc import Timer
 # 二维码
 from gaolin.scanQRCode import JsonInterface
-
 from home import views
-import caffe
+
 
 def getArrayFromStr(strRes):
     sR = copy.deepcopy(strRes)
@@ -72,13 +73,21 @@ def runQR(filepath):
 
 
 # 识别类型
-def runType(filepath):
+def runType(filepath, image_width=512, image_height=512):
     timer = Timer()
     timer.tic()
 
     try:
         timer.toc("1")
-        im = caffe.io.load_image(filepath)
+        # im = caffe.io.load_image(filepath)
+        ## load image with OpenCV
+        im = cv2.imread(filepath)
+        im = cv2.resize(im, (image_width, image_height))
+        im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
+        im = im.astype(np.float32)
+        im_max = np.max(im)
+        im_min = np.min(im)
+        im = (im - im_min) / (im_max - im_min)
         timer.toc("2")
 
         invoice_type = ['other', 'spec_and_normal']
