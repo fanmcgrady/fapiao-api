@@ -114,3 +114,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "allstatic"),)
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 2621440 * 4
