@@ -96,10 +96,9 @@ if __name__ == '__main__':
         image_path = sys.argv[1]
         image_type = sys.argv[2]
     else:
-        print('args: path, type')
-        # image_path = '/home/public/Pics/Special.30.20181203/'
-        # image_type = '01'
-        exit(1)
+        print('use default args: path, type')
+        image_path = '/home/public/Pics/Normal.1006.20190302/'
+        image_type = '01'
 
     im_names = glob.glob(os.path.join(image_path, "*.jpg"))
     iSum = len(im_names)
