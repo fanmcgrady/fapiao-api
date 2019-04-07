@@ -1,5 +1,9 @@
 import copy
+import glob
 import json
+import os
+import time
+
 import cv2
 
 # 二维码
@@ -94,6 +98,45 @@ def runType(filepath):
 
 
 if __name__ == '__main__':
-    filepath = "Image_00175.jpg"
-    #runType(filepath)
-    runQR(filepath)
+    if len(sys.argv) == 3:
+        image_path = sys.argv[1]
+        image_type = sys.argv[2]
+    else:
+        print('args: path, type')
+        # image_path = '/home/public/Pics/Special.30.20181203/'
+        # image_type = '01'
+        exit(1)
+
+    im_names = glob.glob(os.path.join(image_path, "*.jpg"))
+    iSum = len(im_names)
+    iLoop = 0
+    iCorr = 0
+    for filename in im_names:
+
+        # if test be limited for 30 pieces uncomment flow 2 line
+        #        if ((iLoop + 1) > 3):
+        #            break
+        # limited end
+        iLoop += 1
+        # print(run_qrcode(filename))
+        # print(filename)
+        sTime = time.time()
+        detType = runType(filename)
+        eTime = time.time()
+        dTime = int((eTime - sTime) * 1000)
+        if detType == 'special':
+            detType = '01'
+        else:
+            detType = '00'
+
+        if (detType == image_type):
+            # Type Match : /home/public/Pics/Normal.268.20181213.Color/20181119_fuhua_2018111914543230.jpg
+            print(dTime, 'ms, Match  :', filename)
+            iCorr += 1
+        else:
+            # Type:   00 : /home/public/Pics/Special.14.20181226/Image_00013.jpg
+            print(dTime, 'ms, Get', detType, ':', filename)
+
+    print('------------------------------')
+    print('Sum:', iLoop, ', Correct:', iCorr, ', Rate: ', int(iCorr * 100 / iLoop), '%')
+    print('------------------------------')
