@@ -11,6 +11,9 @@ import sys
 sys.path.append("/home/ocr/fapiao/fp")
 from fp.TextBoxes import recog_invoice_type
 
+import caffe
+recog = recog_invoice_type.InvoiTypeRecog()
+
 def getArrayFromStr(strRes):
     sR = copy.deepcopy(strRes)
     index = sR.find(',', 0)
@@ -72,8 +75,6 @@ def runQR(filepath):
 # 识别类型
 def runType(filepath):
     try:
-        recog = recog_invoice_type.InvoiTypeRecog()
-        import caffe
         im = caffe.io.load_image(filepath)
 
         invoice_type = ['other', 'spec_and_normal']
