@@ -74,11 +74,7 @@ def runQR(filepath):
 
 # 识别类型
 def runType(filepath, image_width=512, image_height=512):
-    timer = Timer()
-    timer.tic()
-
     try:
-        timer.toc("1")
         # im = caffe.io.load_image(filepath)
         ## load image with OpenCV
         im = cv2.imread(filepath)
@@ -88,12 +84,9 @@ def runType(filepath, image_width=512, image_height=512):
         im_max = np.max(im)
         im_min = np.min(im)
         im = (im - im_min) / (im_max - im_min)
-        timer.toc("2")
 
         invoice_type = ['other', 'spec_and_normal']
-        timer.toc("3")
         index = views.global_recog(im)
-        timer.toc("4")
         print("recog index: {}".format(index))
         if index < 0:
             return "other"
@@ -105,7 +98,6 @@ def runType(filepath, image_width=512, image_height=512):
     if typeP == 'spec_and_normal' or typeP == 'spec_and_normal_bw':
         typeP = 'special'
 
-    timer.toc("5")
     return typeP
 
 
