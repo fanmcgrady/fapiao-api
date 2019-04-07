@@ -2,6 +2,13 @@
 import os
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 
+# 分类
+# 加载fp
+import sys
+sys.path.append("/home/ocr/fapiao/fp")
+from fp.TextBoxes import recog_invoice_type
+global_recog = recog_invoice_type.InvoiTypeRecog()
+
 import API
 import datetime
 import json
@@ -9,6 +16,8 @@ import base64
 
 from django.http import JsonResponse
 import traceback
+
+
 
 
 # API

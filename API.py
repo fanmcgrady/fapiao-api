@@ -9,14 +9,8 @@ import cv2
 # 二维码
 from gaolin.scanQRCode import JsonInterface
 
-# 分类
-# 加载fp
-import sys
-sys.path.append("/home/ocr/fapiao/fp")
-from fp.TextBoxes import recog_invoice_type
-
+from home import views
 import caffe
-recog = recog_invoice_type.InvoiTypeRecog()
 
 def getArrayFromStr(strRes):
     sR = copy.deepcopy(strRes)
@@ -82,7 +76,7 @@ def runType(filepath):
         im = caffe.io.load_image(filepath)
 
         invoice_type = ['other', 'spec_and_normal']
-        index = recog(im)
+        index = views.global_recog(im)
         print("recog index: {}".format(index))
         if index < 0:
             return "other"
