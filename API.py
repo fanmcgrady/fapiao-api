@@ -85,7 +85,7 @@ def runType(filepath, image_width=512, image_height=512):
         im_min = np.min(im)
         im = (im - im_min) / (im_max - im_min)
 
-        invoice_type = ['other', 'spec_and_normal']
+        invoice_type = ['other', 'special', 'quota']
         index = views.global_recog(im)
         print("recog index: {}".format(index))
         if index < 0:
@@ -94,9 +94,6 @@ def runType(filepath, image_width=512, image_height=512):
     except Exception as e:
         print(e)
         return "other"
-
-    if typeP == 'spec_and_normal' or typeP == 'spec_and_normal_bw':
-        typeP = 'special'
 
     return typeP
 
