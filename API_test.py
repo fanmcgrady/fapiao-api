@@ -3,7 +3,7 @@ import base64
 
 import requests
 
-HOST = "http://202.115.103.60"
+HOST = "http://202.115.103.60:8000"
 
 
 # 发票二维码识别接口

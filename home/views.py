@@ -69,6 +69,10 @@ def QR_API(request):
                 "invoice": ""
             }
 
+        # 删除文件
+        if (os.path.exists(full_path)):
+            os.remove(full_path)
+
         return JsonResponse(ret)
 
 
@@ -136,6 +140,10 @@ def Type_API(request):
                 "returnMessage": "处理失败:" + str(e),
                 "invoiceType": type
             }
+
+        # 删除文件
+        if (os.path.exists(full_path)):
+            os.remove(full_path)
 
         return JsonResponse(ret)
 
