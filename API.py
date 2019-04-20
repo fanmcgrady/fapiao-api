@@ -97,6 +97,27 @@ def runType(filepath, image_width=512, image_height=512):
 
     return typeP
 
+# 识别发票图片
+def runDetect(filepath):
+    try:
+        info, position = scanQRc(filepath)
+        print("info: {}, position: {}".format(info, position))
+    except Exception as e:
+        print(e)
+        return None
+
+    if info != '':
+
+        resArray = getArrayFromStr(info)
+        # js = InterfaceType.JsonInterface.invoice()
+        js = JsonInterface.invoice()
+        js.setVATInvoiceFromArray(resArray, "special")
+
+        jsoni = js.dic['invoice']
+        print(jsoni)
+        return json.dumps(jsoni).encode().decode("unicode-escape")
+    else:
+        return None
 
 if __name__ == '__main__':
     if len(sys.argv) == 3:
