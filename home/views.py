@@ -165,18 +165,18 @@ def Type_API(request):
             # 00 其他类型
             # 注：增值税票目前不能区分具体种类，可统一返回01
 
-            if type == 'quota':
-                type = "95"
-            elif type == 'elect':
-                type = "10"
-            elif type == 'airticket':
-                type = "93"
-            elif type == 'special':
-                type = "01"
-            elif type == 'trainticket':
-                type = "92"
-            else:
-                type = "00"
+            # if type == 'quota':
+            #     type = "95"
+            # elif type == 'elect':
+            #     type = "10"
+            # elif type == 'airticket':
+            #     type = "93"
+            # elif type == 'special':
+            #     type = "01"
+            # elif type == 'trainticket':
+            #     type = "92"
+            # else:
+            #     type = "00"
 
             ret = {
                 "returnCode": "0000",
