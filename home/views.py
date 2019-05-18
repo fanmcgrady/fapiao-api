@@ -194,8 +194,8 @@ def Type_API(request):
             }
 
         # 删除文件
-        if (os.path.exists(full_path)):
-            os.remove(full_path)
+        # if (os.path.exists(full_path)):
+        #     os.remove(full_path)
 
         return JsonResponse(ret)
 
