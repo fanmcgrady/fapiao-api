@@ -12,6 +12,7 @@ from TicToc import Timer
 # 二维码
 from gaolin.scanQRCode import JsonInterface
 from home import views
+import caffe
 
 
 def getArrayFromStr(strRes):
@@ -75,15 +76,15 @@ def runQR(filepath):
 # 识别类型
 def runType(filepath, image_width=512, image_height=512):
     try:
-        # im = caffe.io.load_image(filepath)
+        im = caffe.io.load_image(filepath)
         ## load image with OpenCV
-        im = cv2.imread(filepath)
-        im = cv2.resize(im, (image_width, image_height))
-        im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
-        im = im.astype(np.float32)
-        im_max = np.max(im)
-        im_min = np.min(im)
-        im = (im - im_min) / (im_max - im_min)
+        # im = cv2.imread(filepath)
+        # im = cv2.resize(im, (image_width, image_height))
+        # im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
+        # im = im.astype(np.float32)
+        # im_max = np.max(im)
+        # im_min = np.min(im)
+        # im = (im - im_min) / (im_max - im_min)
 
         typeP = views.global_recog(im)
         print("recog index: {}".format(typeP))
