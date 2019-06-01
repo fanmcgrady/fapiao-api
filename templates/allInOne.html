@@ -313,7 +313,7 @@
 
                     console.log(fileList);
                     // 识别
-                    // ocrForVat();
+                    ocrForVat();
                 }
             }
         })
@@ -353,60 +353,60 @@
                 filename = arg.path.substring(arg.path.lastIndexOf('/') + 1);
                 tr.append($('<td><img src="static/' + arg.path + '"/><br/>' + filename + '</td>'));
 
-                if (arg.status) {
-                    if (arg.type === 'special' || arg.type === 'normal') {
-                        // 行提取结果
-                        tr.append($('<td><img src="static/' + arg.line + '"/></td>'));
-
-                        // 显示识别结果
-                        var invoice = arg.result.invoice;
-                        var data = {
-                            "id": index - 1,
-                            "filename": filename,
-                            "path": "allstatic/" + arg.path,
-                            "invoice": invoice
-                        };
-
-                        // 向结果数组加入数据
-                        resultData.push(data);
-
-                        if (arg.type === 'special') {
-                            tr.append(
-                                $('<td></td>')
-                                    .append($("<p></p>").text("发票代码：" + invoice.invoiceCode))
-                                    .append($("<p></p>").text("发票号码：" + invoice.invoiceNo))
-                                    .append($("<p></p>").text("发票日期：" + invoice.invoiceDate))
-                                    .append($("<p></p>").text("不含税金额：" + invoice.invoiceAmount))
-                                    .append($("<p></p>").html(arg.timer))
-                                {#.append($("<p></p>").text("总金额：" + invoice.totalAmount))#}
-                            );
-                        }
-                        else{
-                            tr.append(
-                                $('<td></td>')
-                                    .append($("<p></p>").text("发票代码：" + invoice.invoiceCode))
-                                    .append($("<p></p>").text("发票号码：" + invoice.invoiceNo))
-                                    .append($("<p></p>").text("发票日期：" + invoice.invoiceDate))
-                                    .append($("<p></p>").text("不含税金额：" + invoice.invoiceAmount))
-                                    .append($("<p></P>").text("校验码： "+ invoice.verifyCode))
-                                    .append($("<p></p>").html(arg.timer))
-                                {#.append($("<p></p>").text("总金额：" + invoice.totalAmount))#}
-                            );
-                        }
-                    }
-                    else {
-                        var td = $('<td colspan="2"></td>');
-                        td.append($("<p></p>").html("不是增值税发票，该发票类型暂不识别：" + arg.type));
-                        tr.append(td);
-                    }
-                } else {
-                    // 出错合并单元格并提示出错信息
-                    // var length = arg.result.length;
-                    var td = $('<td colspan="2"></td>');
-                    td.append($("<p></p>").html(arg.result));
-                    tr.append(td);
-                    //tr.append($('<td colspan="2"><span class="label label-primary">' + arg.result + '</span></td>'));
-                }
+                // if (arg.status) {
+                //     if (arg.type === 'special' || arg.type === 'normal') {
+                //         // 行提取结果
+                //         tr.append($('<td><img src="static/' + arg.line + '"/></td>'));
+                //
+                //         // 显示识别结果
+                //         var invoice = arg.result.invoice;
+                //         var data = {
+                //             "id": index - 1,
+                //             "filename": filename,
+                //             "path": "allstatic/" + arg.path,
+                //             "invoice": invoice
+                //         };
+                //
+                //         // 向结果数组加入数据
+                //         resultData.push(data);
+                //
+                //         if (arg.type === 'special') {
+                //             tr.append(
+                //                 $('<td></td>')
+                //                     .append($("<p></p>").text("发票代码：" + invoice.invoiceCode))
+                //                     .append($("<p></p>").text("发票号码：" + invoice.invoiceNo))
+                //                     .append($("<p></p>").text("发票日期：" + invoice.invoiceDate))
+                //                     .append($("<p></p>").text("不含税金额：" + invoice.invoiceAmount))
+                //                     .append($("<p></p>").html(arg.timer))
+                //                 {#.append($("<p></p>").text("总金额：" + invoice.totalAmount))#}
+                //             );
+                //         }
+                //         else{
+                //             tr.append(
+                //                 $('<td></td>')
+                //                     .append($("<p></p>").text("发票代码：" + invoice.invoiceCode))
+                //                     .append($("<p></p>").text("发票号码：" + invoice.invoiceNo))
+                //                     .append($("<p></p>").text("发票日期：" + invoice.invoiceDate))
+                //                     .append($("<p></p>").text("不含税金额：" + invoice.invoiceAmount))
+                //                     .append($("<p></P>").text("校验码： "+ invoice.verifyCode))
+                //                     .append($("<p></p>").html(arg.timer))
+                //                 {#.append($("<p></p>").text("总金额：" + invoice.totalAmount))#}
+                //             );
+                //         }
+                //     }
+                //     else {
+                //         var td = $('<td colspan="2"></td>');
+                //         td.append($("<p></p>").html("不是增值税发票，该发票类型暂不识别：" + arg.type));
+                //         tr.append(td);
+                //     }
+                // } else {
+                //     // 出错合并单元格并提示出错信息
+                //     // var length = arg.result.length;
+                //     var td = $('<td colspan="2"></td>');
+                //     td.append($("<p></p>").html(arg.result));
+                //     tr.append(td);
+                //     //tr.append($('<td colspan="2"><span class="label label-primary">' + arg.result + '</span></td>'));
+                // }
 
                 // 显示结果图片
                 $('#result-table').append(tr);
