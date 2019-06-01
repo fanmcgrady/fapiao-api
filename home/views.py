@@ -25,17 +25,21 @@ def index(request):
     return render(request, 'allInOne.html')
 
 def testType(resquest):
-    # POST压缩包中的文件
-    filename = request.POST['fileInZip']
+    ret = {}
+    try:
+        # POST压缩包中的文件
+        filename = request.POST['fileInZip']
 
-    # 文件已通过getFileList方法上传到upload目录，此时不需要上传了
-    # 拼接目录
-    file_path = os.path.join('upload', filename)
-    line_filename = os.path.join('line', filename)
+        # 文件已通过getFileList方法上传到upload目录，此时不需要上传了
+        # 拼接目录
+        file_path = os.path.join('upload', filename)
+        full_path = os.path.join('allstatic', file_path)
 
-    full_path = os.path.join('allstatic', file_path)
+        ret = API.runType(full_path)
 
-    ret = API.runType(full_path)
+    except Exception as e:
+        traceback.print_exc()
+
     return HttpResponse(json.dumps(ret))
 
 # 批量上传获取文件列表
