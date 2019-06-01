@@ -17,14 +17,14 @@ import datetime
 import json
 import base64
 
-from django.http import JsonResponse, HttpResponse, request
+from django.http import JsonResponse, HttpResponse
 import traceback
 from django.shortcuts import render
 
 def index(request):
     return render(request, 'allInOne.html')
 
-def testType(resquest):
+def testType(request):
     ret = {}
     try:
         # POST压缩包中的文件
