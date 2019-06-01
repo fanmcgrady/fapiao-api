@@ -28,6 +28,6 @@ urlpatterns = [
 
     url(r"^$", home_views.index),
 
-    url(r"^testType", home_views.testType())
+    url(r"^testType", home_views.testType)
 ]
 
