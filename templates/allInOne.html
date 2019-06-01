@@ -353,6 +353,16 @@
                 filename = arg.path.substring(arg.path.lastIndexOf('/') + 1);
                 tr.append($('<td><img src="static/' + arg.path + '"/><br/>' + filename + '</td>'));
 
+                if (arg.status) {
+                    if (arg.result === '01') {
+                        tr.append($('<td><p>增值税专用发票<p/></td>'));
+                    } else {
+                        tr.append($('<td><p>其他类型<p/></td>'));
+                    }
+                } else {
+                    tr.append($('<td><p>识别出错<p/></td>'));
+                }
+
                 // if (arg.status) {
                 //     if (arg.type === 'special' || arg.type === 'normal') {
                 //         // 行提取结果
