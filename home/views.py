@@ -35,7 +35,13 @@ def testType(request):
         file_path = os.path.join('upload', filename)
         full_path = os.path.join('allstatic', file_path)
 
-        ret = API.runType(full_path)
+        result = API.runType(full_path)
+
+        ret = {
+            'status': True,
+            'path': file_path,
+            'result': result
+        }
 
     except Exception as e:
         traceback.print_exc()
