@@ -38,5 +38,5 @@ def run_type():
 
 if __name__ == '__main__':
     print(run_qrcode())
-    print(run_type())
+    # print(run_type())
 
