@@ -1,4 +1,5 @@
 # 设置只用前两个GPU
+import cv2
 import os
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 
@@ -51,12 +52,16 @@ def multi(request):
 
         try:
             # 识别
+            text = ""
+            index = 1
             im = cv2.imread(full_path, 1)
             res = detr(im)
             for name, score, rect in res:
                 print('name:', name)
                 print('score:', score)
                 print('rect:', rect)
+                text += "票面" + str(index) + ": " + name + "s<br>"
+                index += 1
 
             # draw results
             im = fp.multi.muldetect.draw_result(im, res)
@@ -66,7 +71,7 @@ def multi(request):
                 'status': True,
                 'path': file_path,
                 'line': line_filename,
-                'result': str(res)
+                'result': text
             }
 
         # 打印错误原因
