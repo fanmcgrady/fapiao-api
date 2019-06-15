@@ -1,7 +1,5 @@
-# 设置只用前两个GPU
 import cv2
 import os
-# os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 
 # 分类
 # 加载fp
@@ -11,6 +9,7 @@ import zipfile
 
 sys.path.append("/home/ocr/fapiao/fp")
 from fp.TextBoxes import recog_invoice_type
+## 预加载发票类型识别
 global_recog = recog_invoice_type.InvoiTypeRecog()
 
 import API
