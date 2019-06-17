@@ -7,7 +7,9 @@ import shutil
 import sys
 import zipfile
 
-sys.path.append("/home/ocr/fapiao/fp")
+# sys.path.append("/home/ocr/fapiao/fp")
+sys.path.append("/home/ocr/organize")
+
 from fp.TextBoxes import recog_invoice_type
 ## 预加载发票类型识别
 global_recog = recog_invoice_type.InvoiTypeRecog()
