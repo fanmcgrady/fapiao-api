@@ -28,9 +28,54 @@ import fp.multi.muldetect
 # detector for multi-FP
 detr = fp.multi.muldetect.DetectMultiFp()
 
+import OcrForSpecVat
+
+# 票面识别
+def detect(request):
+    return render(request, 'detect.html')
+
 def index(request):
     return render(request, 'allInOne.html')
 
+# 专票统一入口
+def ocrForSpecVat(request):
+    if request.method == "POST":
+        # POST压缩包中的文件
+        filename = request.POST['fileInZip']
+
+        # 文件已通过getFileList方法上传到upload目录，此时不需要上传了
+        # 拼接目录
+        file_path = os.path.join('upload', filename)
+        line_filename = os.path.join('line', filename)
+
+        full_path = os.path.join('allstatic', file_path)
+
+        try:
+            # 识别 给前端传值
+            json_result, timer, type = OcrForSpecVat.init(full_path)
+
+            ## type in ['quota', 'elect', 'airticket', 'special', 'trainticket']
+            if json_result == '':
+                json_result = None
+            ## type = 'special'
+            else:
+                json_result = json.loads(str(json_result).replace("'", "\""))
+
+            ret = {
+                'status': True,
+                'path': file_path,
+                'line': line_filename,
+                'result': json_result,
+                'timer': timer.__str__(),
+                'type': type
+            }
+
+        # 打印错误原因
+        except Exception as e:
+            print(e)
+            ret = {'status': False, 'path': file_path, 'result': str(e)}
+
+        return HttpResponse(json.dumps(ret))
 
 # 多发票检测
 def multi(request):

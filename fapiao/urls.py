@@ -31,6 +31,10 @@ urlpatterns = [
     url(r"^testType$", home_views.testType),
 
     # 多票面检测
-    url(r"^multi$", home_views.multi)
+    url(r"^multi$", home_views.multi),
+
+    # 统一入口
+    url(r"^detect$", home_views.detect),
+    url(r"^ocrForSpecVat$", home_views.ocrForSpecVat),
 ]
 
