@@ -10,9 +10,9 @@ import cv2
 import numpy as np
 from PIL import Image
 
-import fp
+# import fp
 import fp.TextBoxes.recog_invoice_type
-from connector import flow, connecter
+# from connector import flow, connecter
 from connector.TicToc import Timer
 from home import views
 
