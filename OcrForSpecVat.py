@@ -24,7 +24,8 @@ def jwkj_get_filePath_fileName_fileExt(filename):  # 提取路径
 
 
 def newOcr(filepath, typeP, x):
-    return connecter.OCR(filepath, typeP, x)
+    return None
+    # return connecter.OCR(filepath, typeP, x)
 
 
 def CropPic(filePath, recT, origin_filePath, pars, typeP, debug=False, isusebaidu=False):
