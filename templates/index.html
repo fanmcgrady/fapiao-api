@@ -110,9 +110,9 @@
                             <div class="panel-heading"></div>
                             <div class="panel-body">
                                 <div class="h2 text-success">
-                                    <a href="ocrForVat?type=special" class="text-success" target="_blank">专票展示</a>
+                                    <a href="type" class="text-success" target="_blank">发票类型识别</a>
                                 </div>
-                                <span class="text-muted">展示专票识别的结果</span>
+                                <span class="text-muted">展示发票类型识别的结果</span>
                                 <div class="text-right">
                                     <i class="ion-ios7-refresh fa-2x text-success"></i>
                                 </div>
@@ -125,9 +125,9 @@
                             <div class="panel-heading"></div>
                             <div class="panel-body">
                                 <div class="h2 text-warning">
-                                    <a href="ocrForVat?type=normal" class="text-warning" target="_blank">普票展示</a>
+                                    <a href="multi" class="text-warning" target="_blank">多发票检测</a>
                                 </div>
-                                <span class="text-muted">展示普票识别的结果</span>
+                                <span class="text-muted">展示多发票检测识别的结果</span>
                                 <div class="text-right">
                                     <i class="ion-ios7-refresh fa-2x text-warning"></i>
                                 </div>
@@ -140,9 +140,9 @@
                             <div class="panel-heading"></div>
                             <div class="panel-body">
                                 <div class="h2 text-primary">
-                                    <a href="ocrForVat?type=elec" class="text-primary" target="_blank">电子票展示</a>
+                                    <a href="detect" class="text-primary" target="_blank">全票面展示</a>
                                 </div>
-                                <span class="text-muted">展示电子票识别的结果</span>
+                                <span class="text-muted">展示全票面展示识别的结果</span>
                                 <div class="text-right">
                                     <i class="ion-ios7-refresh fa-2x text-primary"></i>
                                 </div>
@@ -151,88 +151,88 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h4 class="pull-left page-title">火车票</h4>
-                    </div>
-                </div>
+                <!--<div class="row">-->
+                    <!--<div class="col-sm-12">-->
+                        <!--<h4 class="pull-left page-title">火车票</h4>-->
+                    <!--</div>-->
+                <!--</div>-->
 
-                <div class="row text-center">
-                    <div class="col-md-6 col-sm-6 col-lg-3">
-                        <div class="panel panel-border panel-primary widget-s-1">
-                            <div class="panel-heading"> </div>
-                            <div class="panel-body">
-                                <div class="h2 text-primary">
-                                    <a href="detect?type=blue" class="text-primary" target="_blank">蓝色火车票矫正展示</a>
-                                </div>
-                                <span class="text-muted">展示蓝色火车票预处理矫正的结果</span>
-                                <div class="text-right">
-                                    <i class="ion-ios7-refresh fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <!--<div class="row text-center">-->
+                    <!--<div class="col-md-6 col-sm-6 col-lg-3">-->
+                        <!--<div class="panel panel-border panel-primary widget-s-1">-->
+                            <!--<div class="panel-heading"> </div>-->
+                            <!--<div class="panel-body">-->
+                                <!--<div class="h2 text-primary">-->
+                                    <!--<a href="detect?type=blue" class="text-primary" target="_blank">蓝色火车票矫正展示</a>-->
+                                <!--</div>-->
+                                <!--<span class="text-muted">展示蓝色火车票预处理矫正的结果</span>-->
+                                <!--<div class="text-right">-->
+                                    <!--<i class="ion-ios7-refresh fa-2x text-primary"></i>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                    <div class="col-md-6 col-sm-6 col-lg-3">
-                        <div class="panel panel-border panel-primary widget-s-1">
-                            <div class="panel-heading"> </div>
-                            <div class="panel-body">
-                                <div class="h2 text-primary">
-                                    <a href="ocr?type=blue" class="text-primary" target="_blank">蓝色火车票识别展示</a>
-                                </div>
-                                <span class="text-muted">展示蓝色火车票识别的结果</span>
-                                <div class="text-right">
-                                      <i class="ion-ios7-paper fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!--<div class="col-md-6 col-sm-6 col-lg-3">-->
+                        <!--<div class="panel panel-border panel-primary widget-s-1">-->
+                            <!--<div class="panel-heading"> </div>-->
+                            <!--<div class="panel-body">-->
+                                <!--<div class="h2 text-primary">-->
+                                    <!--<a href="ocr?type=blue" class="text-primary" target="_blank">蓝色火车票识别展示</a>-->
+                                <!--</div>-->
+                                <!--<span class="text-muted">展示蓝色火车票识别的结果</span>-->
+                                <!--<div class="text-right">-->
+                                      <!--<i class="ion-ios7-paper fa-2x text-primary"></i>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                    <div class="col-md-6 col-sm-6 col-lg-3">
-                        <div class="panel panel-border panel-danger widget-s-1">
-                            <div class="panel-heading"></div>
-                            <div class="panel-body">
-                                <div class="h2 text-danger">
-                                    <a href="detect?type=excess" class="text-danger" target="_blank">补票矫正展示</a>
-                                </div>
-                                <span class="text-muted">展示补票预处理矫正的结果</span>
-                                <div class="text-right">
-                                    <i class="ion-ios7-refresh fa-2x text-danger"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!--<div class="col-md-6 col-sm-6 col-lg-3">-->
+                        <!--<div class="panel panel-border panel-danger widget-s-1">-->
+                            <!--<div class="panel-heading"></div>-->
+                            <!--<div class="panel-body">-->
+                                <!--<div class="h2 text-danger">-->
+                                    <!--<a href="detect?type=excess" class="text-danger" target="_blank">补票矫正展示</a>-->
+                                <!--</div>-->
+                                <!--<span class="text-muted">展示补票预处理矫正的结果</span>-->
+                                <!--<div class="text-right">-->
+                                    <!--<i class="ion-ios7-refresh fa-2x text-danger"></i>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                    <div class="col-md-6 col-sm-6 col-lg-3">
-                        <div class="panel panel-border panel-danger widget-s-1">
-                            <div class="panel-heading"></div>
-                            <div class="panel-body">
-                                <div class="h2 text-danger">
-                                    <a href="ocr?type=excess" class="text-danger" target="_blank">补票识别展示</a>
-                                </div>
-                                <span class="text-muted">展示补票识别的结果</span>
-                                <div class="text-right">
-                                    <i class="ion-ios7-paper fa-2x text-danger"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!--<div class="col-md-6 col-sm-6 col-lg-3">-->
+                        <!--<div class="panel panel-border panel-danger widget-s-1">-->
+                            <!--<div class="panel-heading"></div>-->
+                            <!--<div class="panel-body">-->
+                                <!--<div class="h2 text-danger">-->
+                                    <!--<a href="ocr?type=excess" class="text-danger" target="_blank">补票识别展示</a>-->
+                                <!--</div>-->
+                                <!--<span class="text-muted">展示补票识别的结果</span>-->
+                                <!--<div class="text-right">-->
+                                    <!--<i class="ion-ios7-paper fa-2x text-danger"></i>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                    <div class="col-md-6 col-sm-6 col-lg-3">
-                        <div class="panel panel-border panel-danger widget-s-1">
-                            <div class="panel-heading"></div>
-                            <div class="panel-body">
-                                <div class="h2 text-danger">
-                                    <a href="ocr?type=red" class="text-danger" target="_blank">红票识别展示</a>
-                                </div>
-                                <span class="text-muted">展示红票识别的结果</span>
-                                <div class="text-right">
-                                    <i class="ion-ios7-paper fa-2x text-danger"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <!--<div class="col-md-6 col-sm-6 col-lg-3">-->
+                        <!--<div class="panel panel-border panel-danger widget-s-1">-->
+                            <!--<div class="panel-heading"></div>-->
+                            <!--<div class="panel-body">-->
+                                <!--<div class="h2 text-danger">-->
+                                    <!--<a href="ocr?type=red" class="text-danger" target="_blank">红票识别展示</a>-->
+                                <!--</div>-->
+                                <!--<span class="text-muted">展示红票识别的结果</span>-->
+                                <!--<div class="text-right">-->
+                                    <!--<i class="ion-ios7-paper fa-2x text-danger"></i>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
                 <div class="row">
                     <div class="col-md-12">
