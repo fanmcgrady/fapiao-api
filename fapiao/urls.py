@@ -28,7 +28,7 @@ urlpatterns = [
 
     url(r"^$", home_views.index),
 
-    url(r"^testType$", home_views.testType),
+    url(r"^type$", home_views.testType),
 
     # 多票面检测
     url(r"^multi$", home_views.multi),

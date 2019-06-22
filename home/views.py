@@ -35,7 +35,7 @@ def detect(request):
     return render(request, 'detect.html')
 
 def index(request):
-    return render(request, 'allInOne.html')
+    return render(request, 'index.html')
 
 # 专票统一入口
 def ocrForSpecVat(request):
@@ -131,28 +131,31 @@ def multi(request):
 
 
 def testType(request):
-    ret = {}
-    try:
-        # POST压缩包中的文件
-        filename = request.POST['fileInZip']
+    if request.method == "GET":
+        return render(request, 'type.html')
+    elif request.method == "POST":
+        ret = {}
+        try:
+            # POST压缩包中的文件
+            filename = request.POST['fileInZip']
 
-        # 文件已通过getFileList方法上传到upload目录，此时不需要上传了
-        # 拼接目录
-        file_path = os.path.join('upload', filename)
-        full_path = os.path.join('allstatic', file_path)
+            # 文件已通过getFileList方法上传到upload目录，此时不需要上传了
+            # 拼接目录
+            file_path = os.path.join('upload', filename)
+            full_path = os.path.join('allstatic', file_path)
 
-        result = API.runType(full_path)
+            result = API.runType(full_path)
 
-        ret = {
-            'status': True,
-            'path': file_path,
-            'result': result
-        }
+            ret = {
+                'status': True,
+                'path': file_path,
+                'result': result
+            }
 
-    except Exception as e:
-        traceback.print_exc()
+        except Exception as e:
+            traceback.print_exc()
 
-    return HttpResponse(json.dumps(ret))
+        return HttpResponse(json.dumps(ret))
 
 # 批量上传获取文件列表
 def getFileList(request):
