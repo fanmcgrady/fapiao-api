@@ -106,7 +106,7 @@ def multi(request):
                 print('name:', name)
                 print('score:', score)
                 print('rect:', rect)
-                text += "票面" + str(index) + ": " + str(name) + "s<br>"
+                text += "票面" + str(index) + ": " + bytes.decode(name) + "<br>"
                 index += 1
 
             # draw results
