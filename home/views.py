@@ -108,7 +108,7 @@ def multi(request):
                 print('rect:', rect)
                 text += "票面" + str(index) + ": <br>"
                 text += "name: " + bytes.decode(name) + "<br>"
-                text += "rect: " + rect + "<br>"
+                text += "rect: " + str(rect) + "<br>"
                 index += 1
 
             # draw results
