@@ -30,6 +30,9 @@ detr = fp.multi.muldetect.DetectMultiFp()
 
 import OcrForSpecVat
 
+from connector import PipelineInit
+global_pipeline = PipelineInit.PipelineInit()
+
 # 票面识别
 def detect(request):
     return render(request, 'detect.html')
