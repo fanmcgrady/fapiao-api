@@ -7,6 +7,9 @@ import shutil
 import sys
 import zipfile
 
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
+
 # sys.path.append("/home/ocr/fapiao/fp")
 sys.path.append("/home/ocr/organize")
 
