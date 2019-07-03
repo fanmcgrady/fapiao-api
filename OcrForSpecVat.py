@@ -367,7 +367,6 @@ def init(filepath, pars=dict(textline_method='textboxes')):  # type='special',
     else:
         return "", timer, typeP
 
-    if not views.local_start:
         # res = scanQRc(filepath)
         # timer.toc(content="二维码识别")
         #
@@ -402,10 +401,7 @@ def init(filepath, pars=dict(textline_method='textboxes')):  # type='special',
         #     return newMubanDetect(filepath, typeP, pars, timer)
 
         # 暂时关闭二维码
-        return newMubanDetect(filepath, typeP, pars, timer)
-    else:
-        # print('newMubanD')
-        return newMubanDetect(filepath, typeP, pars, timer)
+    return newMubanDetect(filepath, typeP, pars, timer)
 
 
 '''dset_dir = 'E:/DevelopT/pycharm_workspace/Ocr/Image'
