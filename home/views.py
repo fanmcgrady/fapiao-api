@@ -405,7 +405,7 @@ def Detect_API(request):
             if json_result == '':
                 json_result = None
             else:
-                json_result = json.loads(str(json_result['invoice']).replace("'", "\""))
+                json_result = json.loads(str(json_result).replace("'", "\""))
 
 
             if json_result is None:
@@ -422,7 +422,7 @@ def Detect_API(request):
                         "returnCode": "0000",
                         "returnMessage": "处理成功"
                     },
-                    "invoice": json_result
+                    "invoice": json_result['invoice']
                 }
 
         # 打印错误原因
