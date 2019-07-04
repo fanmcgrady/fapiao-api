@@ -35,8 +35,23 @@ def run_type():
     response = requests.post(url, data=params)
     return response.json()
 
+# 全票面识别接口
+def run_detect():
+    url = HOST + '/detect_api'
+
+    file_name = "Image_00175.jpg"
+    with open(file_name, 'rb') as f:
+        base64_data = base64.b64encode(f.read())
+
+    params = {
+        'picture': base64_data
+    }
+
+    response = requests.post(url, data=params)
+    return response.json()
 
 if __name__ == '__main__':
-    print(run_qrcode())
+    # print(run_qrcode())
     # print(run_type())
+    print(run_detect())
 

@@ -94,28 +94,6 @@ def runType(filepath, image_width=448, image_height=448):
 
     return typeP
 
-# 全票面接口
-def runDetect(filepath):
-    try:
-        info, position = scanQRc(filepath)
-        print("info: {}, position: {}".format(info, position))
-    except Exception as e:
-        print(e)
-        return None
-
-    if info != '':
-
-        resArray = getArrayFromStr(info)
-        # js = InterfaceType.JsonInterface.invoice()
-        js = JsonInterface.invoice()
-        js.setVATInvoiceFromArray(resArray, "special")
-
-        jsoni = js.dic['invoice']
-        print(jsoni)
-        return json.dumps(jsoni).encode().decode("unicode-escape")
-    else:
-        return None
-
 if __name__ == '__main__':
     if len(sys.argv) == 3:
         image_path = sys.argv[1]
