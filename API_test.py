@@ -51,7 +51,7 @@ def run_detect():
     return response.json()
 
 if __name__ == '__main__':
-    print(run_qrcode())
-    print(run_type())
+    # print(run_qrcode())
+    # print(run_type())
     print(run_detect())
 

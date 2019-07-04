@@ -169,6 +169,9 @@ def CropPic(filePath, recT, origin_filePath, pars, typeP, debug=False, isusebaid
     js.setValueWithDict(pC.VATdic)
     jsoni = js.dic
 
+    # type加到返回结果中
+    js.dic['invoice']['invoiceType'] = typeP
+
     time7 = time.time()
     print('后矫正： ' + str(time7 - time6))
 
