@@ -405,7 +405,7 @@ def Detect_API(request):
             if json_result == '':
                 json_result = None
             else:
-                json_result['invoice']['invoiceType'] = type
+                json_result['invoice']['invoiceType'] = str(type)
                 json_result = json.loads(str(json_result['invoice']).replace("'", "\""))
 
 
