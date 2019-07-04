@@ -415,7 +415,7 @@ def Detect_API(request):
 
                 json_result['invoice']['invoiceType'] = type
 
-        if json_result is None:
+            if json_result is None:
                 ret = {
                     "returnStateInfo": {
                         "returnCode": "9999",
