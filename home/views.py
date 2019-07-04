@@ -407,8 +407,15 @@ def Detect_API(request):
             else:
                 json_result = json.loads(str(json_result).replace("'", "\""))
 
+                # type加到返回结果中
+                if type == "special":
+                    type = "01"
+                elif type == "normal":
+                    type = "04"
 
-            if json_result is None:
+                json_result['invoice']['invoiceType'] = type
+
+        if json_result is None:
                 ret = {
                     "returnStateInfo": {
                         "returnCode": "9999",
