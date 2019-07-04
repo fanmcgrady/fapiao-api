@@ -428,6 +428,7 @@ def Detect_API(request):
 
         # 打印错误原因
         except Exception as e:
+            traceback.print_exc()
             print(e)
             ret = {
                 "returnStateInfo": {
