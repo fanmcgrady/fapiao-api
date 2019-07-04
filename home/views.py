@@ -377,11 +377,70 @@ def Type_API(request):
             }
 
         # 删除文件
-        # if (os.path.exists(full_path)):
-        #     os.remove(full_path)
+        if (os.path.exists(full_path)):
+            os.remove(full_path)
 
         return JsonResponse(ret)
 
+def Detect_API(request):
+    if request.method == "POST":
+        try:
+            base64_data = request.POST['picture']
+            # 随机文件名
+            filename, _ = generate_random_name()
+            # 拼接存放位置路径
+            file_path = os.path.join('upload', filename)
+            full_path = os.path.join('allstatic', file_path)
+
+            # 文件写入
+            with open(full_path, "wb") as f:
+                f.write(base64.b64decode(base64_data))
+        except Exception as e:
+            traceback.print_exc()
+
+        try:
+            # 识别 给前端传值
+            json_result, timer, type = OcrForSpecVat.init(full_path)
+
+            if json_result == '':
+                json_result = None
+            else:
+                json_result = json.loads(str(json_result).replace("'", "\""))
+
+
+            if json_result is None:
+                ret = {
+                    "returnStateInfo": {
+                        "returnCode": "9999",
+                        "returnMessage": "处理失败"
+                    },
+                    "invoice": ""
+                }
+            else:
+                ret = {
+                    "returnStateInfo": {
+                        "returnCode": "0000",
+                        "returnMessage": "处理成功"
+                    },
+                    "invoice": json.loads(str(json_result).replace("'", "\""))
+                }
+
+        # 打印错误原因
+        except Exception as e:
+            print(e)
+            ret = {
+                "returnStateInfo": {
+                    "returnCode": "9999",
+                    "returnMessage": "处理失败:" + str(e)
+                },
+                "invoice": ""
+            }
+
+        # 删除文件
+        if (os.path.exists(full_path)):
+            os.remove(full_path)
+
+        return JsonResponse(ret)
 
 # 按日期生成文件名
 def generate_random_name(file_name=None):
