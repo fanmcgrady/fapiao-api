@@ -23,6 +23,7 @@ urlpatterns = [
     url(r"^qr_api$", home_views.QR_API),
     url(r"^type_api$", home_views.Type_API),
     url(r"^detect_api$", home_views.Detect_API),
+    url(r"^multi_api$", home_views.Multi_API),
 
     # 批量上传
     url(r"^getFileList$", home_views.getFileList),

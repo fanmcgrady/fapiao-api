@@ -310,7 +310,6 @@ def QR_API(request):
 
         return JsonResponse(ret)
 
-
 def Type_API(request):
     if request.method == "POST":
         try:
@@ -430,6 +429,63 @@ def Detect_API(request):
                         "returnMessage": "处理成功"
                     },
                     "invoice": json_result['invoice']
+                }
+
+        # 打印错误原因
+        except Exception as e:
+            traceback.print_exc()
+            print(e)
+            ret = {
+                "returnStateInfo": {
+                    "returnCode": "9999",
+                    "returnMessage": "处理失败:" + str(e)
+                },
+                "invoice": ""
+            }
+
+        # 删除文件
+        if (os.path.exists(full_path)):
+            os.remove(full_path)
+
+        return JsonResponse(ret)
+
+# 多发票检测接口
+def Multi_API(request):
+    if request.method == "POST":
+        try:
+            base64_data = request.POST['picture']
+            # 随机文件名
+            filename, _ = generate_random_name()
+            # 拼接存放位置路径
+            file_path = os.path.join('upload', filename)
+            full_path = os.path.join('allstatic', file_path)
+
+            # 文件写入
+            with open(full_path, "wb") as f:
+                f.write(base64.b64decode(base64_data))
+        except Exception as e:
+            traceback.print_exc()
+
+        try:
+            # 识别
+            im = cv2.imread(full_path, 1)
+            json_result = detr(im)
+
+            if json_result is None:
+                ret = {
+                    "returnStateInfo": {
+                        "returnCode": "9999",
+                        "returnMessage": "处理失败"
+                    },
+                    "invoice": ""
+                }
+            else:
+                ret = {
+                    "returnStateInfo": {
+                        "returnCode": "0000",
+                        "returnMessage": "处理成功"
+                    },
+                    "invoice": json_result
                 }
 
         # 打印错误原因
