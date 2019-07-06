@@ -27,7 +27,7 @@ def newOcr(filepath, typeP, x):
     return connecter.OCR(filepath, typeP, x)
 
 
-def CropPic(filePath, recT, origin_filePath, pars, typeP, debug=False, isusebaidu=False):
+def CropPic(filePath, recT, origin_filePath, typeP, debug=False, isusebaidu=False):
     ocrResult = {}
 
     time1 = time.time()
@@ -175,12 +175,10 @@ def CropPic(filePath, recT, origin_filePath, pars, typeP, debug=False, isusebaid
     return json.dumps(jsoni).encode().decode("unicode-escape")
 
 
-def newMubanDetect(filepath, typeP='special', pars=dict(textline_method='textboxes'), timer=None):
-    print(typeP)
-    print(pars)
-
+def newMubanDetect(filepath, typeP='normal', timer=None):
     # pipe = fp.vat_invoice.pipeline.VatInvoicePipeline(typeP, pars=pars, debug=False)  # 请用debug=False
-    pipe = views.global_pipeline.get_pipe(typeP)
+    pipe = views.global_pipeline.get_pipe("normal")
+    # pipe = views.global_pipeline.get_pipe(typeP)
     im = cv2.imread(filepath, 1)
 
     pipe(im)
@@ -283,12 +281,12 @@ def newMubanDetect(filepath, typeP='special', pars=dict(textline_method='textbox
 
     timer.toc(content="行提取图绘制")
 
-    jsonResult = CropPic(filepathS, attributeLine, filepath, pars, typeP, debug=False,
+    jsonResult = CropPic(filepathS, attributeLine, filepath, typeP, debug=False,
                          isusebaidu=False)  # ocr和分词
     timer.toc(content="切图ocr识别")
     print(jsonResult)
 
-    return jsonResult, timer, typeP
+    return jsonResult, timer, '01'
 
 
 # def scanQRc(filepath):
@@ -324,8 +322,7 @@ def getArrayFromStr(strRes):
     return resultArray
 
 
-# def init(filepath, type='special', pars=dict(textline_method='simple')):
-def init(filepath, pars=dict(textline_method='textboxes')):  # type='special',
+def init(filepath):
     '''
     mage = cv2.imread(filepath,0)
     str_info, position = recog_qrcode(image, roi=None)
@@ -337,11 +334,13 @@ def init(filepath, pars=dict(textline_method='textboxes')):  # type='special',
     timer.tic()
 
     recog = fp.TextBoxes.recog_invoice_type.InvoiTypeRecog()
-    im = caffe.io.load_image(filepath)
+    ## load image with OpenCV
+    im = cv2.imread(filepath)
+    im = cv2.resize(im, (448, 448))
+    # im = caffe.io.load_image(filepath)
 
     typeP = recog(im)
 
-    # ['quota', 'elect', 'airticket', 'special', 'trainticket']
     # 01 *增值税专用发票
     # 02 货运运输业增值税专用发票
     # 03 机动车销售统一发票
@@ -359,11 +358,11 @@ def init(filepath, pars=dict(textline_method='textboxes')):  # type='special',
     # 00 其他类型
     # 注：增值税票目前不能区分具体种类，可统一返回01
 
+    # 201907706 返回：['quota', 'airticket', 'special', 'trainticket']
     if typeP == '01':
-        typeP = 'special'
-        # typeP = 'normal'
-    elif typeP == '04':
-        typeP = 'normal'
+        return newMubanDetect(filepath, 'normal', timer)
+    elif typeP == '92':
+        return {}, timer, typeP
     else:
         return "", timer, typeP
 
@@ -401,7 +400,7 @@ def init(filepath, pars=dict(textline_method='textboxes')):  # type='special',
         #     return newMubanDetect(filepath, typeP, pars, timer)
 
         # 暂时关闭二维码
-    return newMubanDetect(filepath, typeP, pars, timer)
+
 
 
 '''dset_dir = 'E:/DevelopT/pycharm_workspace/Ocr/Image'

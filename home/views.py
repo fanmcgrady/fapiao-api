@@ -407,11 +407,6 @@ def Detect_API(request):
                 json_result = json.loads(str(json_result).replace("'", "\""))
 
                 # type加到返回结果中
-                if type == "special":
-                    type = "01"
-                elif type == "normal":
-                    type = "04"
-
                 json_result['invoice']['invoiceType'] = type
 
             if json_result is None:
