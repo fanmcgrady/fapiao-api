@@ -64,7 +64,8 @@ def runQR(filepath):
         resArray = getArrayFromStr(info)
         # js = InterfaceType.JsonInterface.invoice()
         js = JsonInterface.invoice()
-        js.setVATInvoiceFromArray(resArray, "special")
+
+        js.setVATInvoiceFromArray(resArray, "01")
 
         jsoni = js.dic['invoice']
         print(jsoni)
