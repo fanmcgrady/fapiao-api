@@ -514,7 +514,7 @@ def generate_random_name(file_name=None):
 
 def pic2005(request):
     if request.method == 'GET':
-        files = os.listdir("allstatic/upload/2005")
+        files = os.listdir("allstatic/2005-do-not-delete")
         img_list = []
         for f in files:
             img_list.append(f)
@@ -526,7 +526,7 @@ def pic2005(request):
         # 随机文件名
         filename = generate_random_name()
 
-        file_path = os.path.join('upload', filename)
+        file_path = os.path.join('2005-do-not-delete', filename)
         full_path = os.path.join('allstatic', file_path)
         f = open(full_path, 'wb')
         for chunk in obj.chunks():
