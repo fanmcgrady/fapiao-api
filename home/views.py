@@ -517,7 +517,7 @@ def pic2005(request):
         files = os.listdir("allstatic/2005-do-not-delete")
         img_list = []
         for f in files:
-            img_list.append(f)
+            img_list.append("2005-do-not-delete/" + f)
         return render(request, '2005.html', {'img_list': img_list})
     # 上报错误信息
     elif request.method == "POST":
