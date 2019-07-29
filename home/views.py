@@ -514,16 +514,25 @@ def generate_random_name(file_name=None):
 
 def pic2005(request):
     if request.method == 'GET':
-        img_list = ["upload/2005/1.jpg", "upload/2005/1.jpg"]
+        files = os.listdir("allstatic/upload/2005")
+        img_list = []
+        for f in files:
+            img_list.append(f)
         return render(request, '2005.html', {'img_list': img_list})
     # 上报错误信息
     elif request.method == "POST":
+        obj = request.FILES.get('fapiao')
+
+        # 随机文件名
+        filename = generate_random_name()
+
+        file_path = os.path.join('upload', filename)
+        full_path = os.path.join('allstatic', file_path)
+        f = open(full_path, 'wb')
+        for chunk in obj.chunks():
+            f.write(chunk)
+        f.close()
         try:
-            path = request.POST['path']
-            out = request.POST['out']
-            line = request.POST['line']
-            info = request.POST['info']
-            BugThree.objects.create(path=path, out=out, line=line, info=info)
             ret = {'status': True}
         except Exception as e:
             ret = {'status': False}
