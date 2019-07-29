@@ -209,20 +209,6 @@
 <script>
     var resizefunc = [];
 
-    var html = [];
-    html.push('<div class="col-md-6">');
-    html.push(' <div class="panel panel-default">');
-    html.push('     <div class="panel-heading">');
-    html.push('         <h3 class="panel-title"></h3>');
-    html.push('     </div>');
-    html.push('     <div class="panel-body">');
-    html.push('         <div style="text-align: center;vertical-align: middle">');
-    html.push('             <img style="height: 200px;" src=""/>');
-    html.push('         </div>');
-    html.push('     </div>');
-    html.push(' </div>');
-    html.push('</div>');
-
     function upload() {
         // 初始函数
         $("#button-tips").html("上传中...");
@@ -246,6 +232,7 @@
 
                 if (arg.status) {
                     $("#status").html("上传完成");
+                    window.location.href = "2005.html";
                 } else {
                     $("#status").html("图片处理过程中出错啦，请联系方老师完善程序，换一张图片再试试").addClass("text-danger");
                 }
@@ -255,7 +242,7 @@
 
     jQuery(document).ready(function () {
         $('#search').click(function () {
-            // upload();
+            upload();
         });
     });
 
