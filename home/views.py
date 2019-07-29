@@ -511,3 +511,21 @@ def generate_random_name(file_name=None):
         _, ext = os.path.splitext(file_name)
 
     return timestamp + ext, timestamp
+
+def pic2005(request):
+    if request.method == 'GET':
+        img_list = ["upload/2005/1.jpg", "upload/2005/1.jpg"]
+        return render(request, '2005.html', {'img_list': img_list})
+    # 上报错误信息
+    elif request.method == "POST":
+        try:
+            path = request.POST['path']
+            out = request.POST['out']
+            line = request.POST['line']
+            info = request.POST['info']
+            BugThree.objects.create(path=path, out=out, line=line, info=info)
+            ret = {'status': True}
+        except Exception as e:
+            ret = {'status': False}
+
+        return HttpResponse(json.dumps(ret))
