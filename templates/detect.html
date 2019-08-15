@@ -358,7 +358,10 @@
                 tr.append($('<td><img src="static/' + arg.path + '"/><br/>' + filename + '</td>'));
 
                 if (arg.status) {
-                    if (arg.type === '01' || arg.type === '04') {
+                    if (arg.type === '01'
+                        || arg.type === '04'
+                        || arg.type === '93'
+                        || arg.type === '95') {
                         // 行提取结果
                         tr.append($('<td><img src="static/' + arg.line + '"/></td>'));
 
@@ -374,32 +377,28 @@
                         // 向结果数组加入数据
                         resultData.push(data);
 
-                        if (arg.type === 'special') {
-                            tr.append(
-                                $('<td></td>')
-                                    .append($("<p></p>").text("发票代码：" + invoice.invoiceCode))
-                                    .append($("<p></p>").text("发票号码：" + invoice.invoiceNo))
-                                    .append($("<p></p>").text("发票日期：" + invoice.invoiceDate))
-                                    .append($("<p></p>").text("不含税金额：" + invoice.invoiceAmount))
-                                    .append($("<p></P>").text("校验码： " + invoice.verifyCode))
-                                    .append($("<p></p>").html(arg.timer))
-                                {#.append($("<p></p>").text("总金额：" + invoice.totalAmount))#}
-                            );
+                        var typeStr = "";
+                        if (arg.type === '01') {
+                            typeStr = "增值税专用发票";
+                        } else if (arg.type === '04') {
+                            typeStr = "增值税专用发票";
+                        } else if (arg.type === '93') {
+                            typeStr = "飞机票";
+                        } else if (arg.type === '95') {
+                            typeStr = "定额发票";
                         }
-                        else{
-                            tr.append(
-                                $('<td></td>')
-                                    .append($("<p></p>").text("发票代码：" + invoice.invoiceCode))
-                                    .append($("<p></p>").text("发票号码：" + invoice.invoiceNo))
-                                    .append($("<p></p>").text("发票日期：" + invoice.invoiceDate))
-                                    .append($("<p></p>").text("不含税金额：" + invoice.invoiceAmount))
-                                    .append($("<p></P>").text("校验码： "+ invoice.verifyCode))
-                                    .append($("<p></p>").html(arg.timer))
-                                {#.append($("<p></p>").text("总金额：" + invoice.totalAmount))#}
-                            );
-                        }
-                    }
-                    else {
+
+                        tr.append(
+                            $('<td></td>')
+                                .append($("<p></p>").text("发票类型：" + typeStr))
+                                .append($("<p></p>").text("发票代码：" + invoice.invoiceCode))
+                                .append($("<p></p>").text("发票号码：" + invoice.invoiceNo))
+                                .append($("<p></p>").text("发票日期：" + invoice.invoiceDate))
+                                .append($("<p></p>").text("不含税金额：" + invoice.invoiceAmount))
+                                .append($("<p></P>").text("校验码： " + invoice.verifyCode))
+                                .append($("<p></p>").html(arg.timer))
+                        );
+                    } else {
                         var td = $('<td colspan="2"></td>');
                         td.append($("<p></p>").html("不是增值税发票，该发票类型暂不识别：" + arg.type));
                         tr.append(td);
