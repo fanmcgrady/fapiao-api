@@ -2,3 +2,4 @@
 allstatic/upload/*
 allstatic/out/*
 allstatic/line/*
+*.pyc
