@@ -26,17 +26,18 @@ def getPipe(dset_root, file_name, type, idStandard=False):
         im = cv2.imread(filepath, 1)
         ok = pipe(im, idStandard)
         print('ok' if ok else 'fail')
-
         cv2.imwrite(out_filename, pipe.surface_image)
 
         cdic = getDic(pipe.template.items())  # pipe templet
-
         return out_filename, 3, pipe.textlines, cdic
     elif type == 'blue':
+        print("in get Pipe")
         pipe = fp.train_ticket.BlueTrainTicketPipeline(debug=False)
+        print(pipe)
         im = cv2.imread(filepath, 1)
+        print("image readed")
         ok = pipe(im, no_background=idStandard)
-        print('ok' if ok else 'fail')
+        print(ok, 'ok' if ok else 'fail')
 
         cv2.imwrite(out_filename, pipe.surface_image)
 
@@ -67,11 +68,13 @@ def getDic(items):
     }
 
     interfaceDic = {}
+    print(items)
     for key, rect in items:
+        print(key, "-", rect)
         if key in classToInterface.keys():
             if type(classToInterface[key]) == type('departCity'):
-                interfaceDic[classToInterface[key]] = rect.numpy().tolist()
+                interfaceDic[classToInterface[key]] = rect.tolist()
             else:
                 for c in classToInterface[key]:
-                    interfaceDic[c] = rect.numpy().tolist()
+                    interfaceDic[c] = rect.tolist()
     return interfaceDic

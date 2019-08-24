@@ -1,5 +1,3 @@
-# coding=gbk
-
 
 import json
 import os
@@ -20,7 +18,7 @@ from connector import connecter
 
 # import jsonpath
 
-# ¶ÁÈ¡Í¼Æ¬
+# è¯»å–å›¾ç‰‡
 def get_file_content(filePath):
     with open(filePath, 'rb') as fp:
         return fp.read()
@@ -29,7 +27,7 @@ def get_file_content(filePath):
 def Started_Ocr(filePath):
     image = get_file_content(filePath)
 
-    # µ÷ÓÃÍ¨ÓÃÎÄ×ÖÊ¶±ğ, Í¼Æ¬²ÎÊıÎª±¾µØÍ¼Æ¬
+    # è°ƒç”¨é€šç”¨æ–‡å­—è¯†åˆ«, å›¾ç‰‡å‚æ•°ä¸ºæœ¬åœ°å›¾ç‰‡
     # client.basicGeneral(image);
     '''
         APP_ID = '11428388'
@@ -46,14 +44,14 @@ def Started_Ocr(filePath):
 
     client = AipOcr(APP_ID, API_KEY, SECRET_KEY)
 
-    # Èç¹ûÓĞ¿ÉÑ¡²ÎÊı
+    # å¦‚æœæœ‰å¯é€‰å‚æ•°
     options = {}
     options["recognize_granularity"] = "big"
     options["probability"] = "true"
     options["accuracy"] = "normal"
     options["detect_direction"] = "true"
 
-    # ´ø²ÎÊıµ÷ÓÃÍ¨ÓÃÆ±¾İÊ¶±ğ
+    # å¸¦å‚æ•°è°ƒç”¨é€šç”¨ç¥¨æ®è¯†åˆ«
     result = client.receipt(image, options)
 
     data = json.loads(json.dumps(result).encode().decode("unicode-escape"))
@@ -148,8 +146,8 @@ def Detect(filePath):
 
 
 def MakeFile1(box, filePath):
-    # Æğµã
-    # »ğ³µÆ±1 À¶É«  ÆğµãÇĞÆ¬£º
+    # èµ·ç‚¹
+    # ç«è½¦ç¥¨1 è“è‰²  èµ·ç‚¹åˆ‡ç‰‡ï¼š
 
     def jwkj_get_filePath_fileName_fileExt(filename):
         (filepath, tempfilename) = os.path.split(filename);
@@ -160,11 +158,11 @@ def MakeFile1(box, filePath):
     w = box.tolist()[2][0] - box.tolist()[1][0]
 
     # [[526, 379], [526, 272], [634, 272], [634, 379]]
-    # Æğµã[48,62][205,118]          ÖÕµã[412,61][572,116]
+    # èµ·ç‚¹[48,62][205,118]          ç»ˆç‚¹[412,61][572,116]
 
     templet = [[526, 379], [526, 272], [634, 272], [634, 379]]
     templetSt = [[48, 62], [270, 118]]
-    # Ô­µã[634,379]     dh1=56    dw1=157
+    # åŸç‚¹[634,379]     dh1=56    dw1=157
 
     # listStandard = self.Detect(filePath).tolist()
 
@@ -195,8 +193,8 @@ def MakeFile1(box, filePath):
 
 
 def MakeFile2(box, filePath):
-    # ÖÕµã
-    # »ğ³µÆ±1 À¶É«  ÆğµãÇĞÆ¬£º
+    # ç»ˆç‚¹
+    # ç«è½¦ç¥¨1 è“è‰²  èµ·ç‚¹åˆ‡ç‰‡ï¼š
 
     def jwkj_get_filePath_fileName_fileExt(filename):
         (filepath, tempfilename) = os.path.split(filename);
@@ -207,11 +205,11 @@ def MakeFile2(box, filePath):
     w = box.tolist()[2][0] - box.tolist()[1][0]
 
     # [[526, 379], [526, 272], [634, 272], [634, 379]]
-    # Æğµã[48,62][205,118]          ÖÕµã[412,61][572,116]
+    # èµ·ç‚¹[48,62][205,118]          ç»ˆç‚¹[412,61][572,116]
 
     templet = [[526, 379], [526, 272], [634, 272], [634, 379]]
     templetSt = [[412, 61], [640, 116]]
-    # Ô­µã[634,379]     dh1=56    dw1=157
+    # åŸç‚¹[634,379]     dh1=56    dw1=157
 
     # listStandard = self.Detect(filePath).tolist()
 
@@ -239,27 +237,27 @@ def MakeFile2(box, filePath):
     return sFP2;
 
 
-def jwkj_get_filePath_fileName_fileExt(filename):  # ÌáÈ¡Â·¾¶
+def jwkj_get_filePath_fileName_fileExt(filename):  # æå–è·¯å¾„
     (filepath, tempfilename) = os.path.split(filename);
     (shotname, extension) = os.path.splitext(tempfilename);
     return filepath, shotname, extension
 
 
 def MakeFileN(templetStOrig, box, filePath, extraName):
-    # Í¨ÓÃ
-    # »ğ³µÆ±1 À¶É«  ÆğµãÇĞÆ¬£º
+    # é€šç”¨
+    # ç«è½¦ç¥¨1 è“è‰²  èµ·ç‚¹åˆ‡ç‰‡ï¼š
 
     h = box.tolist()[0][1] - box.tolist()[1][1]
     w = box.tolist()[2][0] - box.tolist()[1][0]
 
     # [[526, 379], [526, 272], [634, 272], [634, 379]]
-    # Æğµã[48,62][205,118]          ÖÕµã[412,61][572,116]
-    # Í¨ÓÃtempletSt
+    # èµ·ç‚¹[48,62][205,118]          ç»ˆç‚¹[412,61][572,116]
+    # é€šç”¨templetSt
 
     templet = [[526, 379], [526, 272], [634, 272], [634, 379]]
     # templetStOrig = [[412, 61], [572, 116]]
 
-    # Ô­µã[634,379]     dh1=56    dw1=157
+    # åŸç‚¹[634,379]     dh1=56    dw1=157
 
     # listStandard = self.Detect(filePath).tolist()
     img = Image.open(filePath)
@@ -315,7 +313,7 @@ def MakeFileN(templetStOrig, box, filePath, extraName):
 
 
 def MakeFileM(templetStOrig, box, filePath, extraName):
-    # »ğ³µÆ±2 ºìÉ«  ÆğµãÇĞÆ¬£º
+    # ç«è½¦ç¥¨2 çº¢è‰²  èµ·ç‚¹åˆ‡ç‰‡ï¼š
 
     h = box.tolist()[0][1] - box.tolist()[1][1]
     w = box.tolist()[2][0] - box.tolist()[1][0]
@@ -460,7 +458,7 @@ def OcrPic(secFilePath):
 def OcrNoPic(filePath):
     image = get_file_content(filePath)
 
-    # µ÷ÓÃÍ¨ÓÃÎÄ×ÖÊ¶±ğ, Í¼Æ¬²ÎÊıÎª±¾µØÍ¼Æ¬
+    # è°ƒç”¨é€šç”¨æ–‡å­—è¯†åˆ«, å›¾ç‰‡å‚æ•°ä¸ºæœ¬åœ°å›¾ç‰‡
     # client.basicGeneral(image);
     '''
         APP_ID = '11428388'
@@ -477,14 +475,14 @@ def OcrNoPic(filePath):
 
     client = AipOcr(APP_ID, API_KEY, SECRET_KEY)
 
-    # Èç¹ûÓĞ¿ÉÑ¡²ÎÊı
+    # å¦‚æœæœ‰å¯é€‰å‚æ•°
     options = {}
     options["language_type"] = "CHN_ENG"
     options["detect_direction"] = "true"
     options["detect_language"] = "true"
     options["probability"] = "true"
 
-    # ´ø²ÎÊıµ÷ÓÃÍ¨ÓÃÆ±¾İÊ¶±ğ
+    # å¸¦å‚æ•°è°ƒç”¨é€šç”¨ç¥¨æ®è¯†åˆ«
     result = client.basicGeneral(image, options)
 
     data = json.loads(json.dumps(result).encode().decode("unicode-escape"))
@@ -529,55 +527,55 @@ def DetectBlueTrainTicket(box, filePath):
     # print(type(result2))
     # print(result2)
 
-    # ³Ë¿ÍĞÅÏ¢
+    # ä¹˜å®¢ä¿¡æ¯
     templetStPassagerInfo = [[22, 276], [328, 314]]
     secP4 = MakeFileN(templetStPassagerInfo, box, filePath, 'PassagerInfo')
     result4 = OcrPic(secP4)
-    # ³Ë¿ÍĞÅÏ¢
+    # ä¹˜å®¢ä¿¡æ¯
     templetStPassagerInfoName = [[328, 276], [478, 314]]
     secP4_1 = MakeFileN(templetStPassagerInfoName, box, filePath, 'PassagerInfoName')
     result4_1 = OcrPic(secP4_1)
 
-    # ³µ´Î
+    # è½¦æ¬¡
     templetStTrainNum = [[264, 62], [434, 119]]
     secP3 = MakeFileN(templetStTrainNum, box, filePath, 'trainNum')
     result3 = OcrPic(secP3)
 
-    # ³µ´ÎÊ±¼ä
+    # è½¦æ¬¡æ—¶é—´
     templetStTrainTime = [[24, 139], [393, 181]]
     secP5 = MakeFileN(templetStTrainTime, box, filePath, 'trainTime')
     result5 = OcrPic(secP5)
 
-    # ×ùÎ»
+    # åº§ä½
     templetStSeatNum = [[408, 138], [568, 178]]
     secP6 = MakeFileN(templetStSeatNum, box, filePath, "seatNum")
     result6 = OcrPic(secP6)
 
-    # ×ù´ÎÀàĞÍ
+    # åº§æ¬¡ç±»å‹
     templetStSeatType = [[407, 175], [597, 214]]
     secP7 = MakeFileN(templetStSeatType, box, filePath, "seatType")
     result7 = OcrPic(secP7)
 
-    # ¼ìÆ±¿Ú
+    # æ£€ç¥¨å£
     templetStCheckNum = [[507, 24], [631, 66]]
     secP8 = MakeFileN(templetStCheckNum, box, filePath, "checkNum")
     result8 = OcrPic(secP8)
 
-    # Æ±¼Û
+    # ç¥¨ä»·
     templetStPrice = [[33, 177], [184, 216]]
     secP9 = MakeFileN(templetStPrice, box, filePath, "price")
     result9 = OcrPic(secP9)
 
-    # ³µÆ±ºÅ
+    # è½¦ç¥¨å·
     templetStTicketsNum = [[21, 10], [216, 76]]
     secP10 = MakeFileN(templetStTicketsNum, box, filePath, "ticketsNum")
     result10 = OcrPic(secP10)
 
     '''
-    line1 = "ÆğµãÕ¾:   " + result1 + "\t    ÖÕµãÕ¾: " + result2
-    line2 = "³µ´Î£º    " + result3 + "\t    ³µ´ÎÊ±¼ä:" + result5
-    line3 = "³Ë¿ÍĞÅÏ¢£º " + result4 + "\t    ×ùÎ»:" + result6 + "\t    ×ù´ÎÀàĞÍ:" + result7
-    line4 = "¼ìÆ±¿Ú£º    " + result8 + "\t    Æ±¼Û:" + result9
+    line1 = "èµ·ç‚¹ç«™:   " + result1 + "\t    ç»ˆç‚¹ç«™: " + result2
+    line2 = "è½¦æ¬¡ï¼š    " + result3 + "\t    è½¦æ¬¡æ—¶é—´:" + result5
+    line3 = "ä¹˜å®¢ä¿¡æ¯ï¼š " + result4 + "\t    åº§ä½:" + result6 + "\t    åº§æ¬¡ç±»å‹:" + result7
+    line4 = "æ£€ç¥¨å£ï¼š    " + result8 + "\t    ç¥¨ä»·:" + result9
 
     {
         'departCity':[48, 62,270-48, 118-62],
@@ -597,18 +595,18 @@ def DetectBlueTrainTicket(box, filePath):
     print(line3)
     print(line4)
     '''
-    # ºó½ÃÕı
+    # åçŸ«æ­£
     pC = SemanticCorrect.posteriorCrt.posteriorCrt()
     pC.setTrainTicketPara(result1, result2, result3, result5, result6, result4, result4_1,
                           result9)  # (self, departCity, arriveCity, trainNumber, invoiceDate, seatNum, idNum, passenger)
     pC.startTrainTicketCrt()
 
-    # ´«Èë²ÎÊı
+    # ä¼ å…¥å‚æ•°
     js = InterfaceType.JsonInterface.invoice()
     js.addTrainCardInfo(pC.dic['departCity'], pC.dic['arriveCity'], pC.dic['trainNumber'], pC.dic['invoiceDate'],
                         pC.dic['price'], pC.dic['seatNum'], pC.dic['passenger'], pC.dic['idNum'], result10, '0000',
                         '0000')
-    # Ê¼·¢Õ¾£¬ÖÕµ½Õ¾£¬³µ´Î£¬ÈÕÆÚ£¬½ğ¶î£¬×ùÎ»ºÅ£¬ĞÕÃû£¬Éí·İÖ¤ºÅ£¬³µÆ±ĞòºÅ
+    # å§‹å‘ç«™ï¼Œç»ˆåˆ°ç«™ï¼Œè½¦æ¬¡ï¼Œæ—¥æœŸï¼Œé‡‘é¢ï¼Œåº§ä½å·ï¼Œå§“åï¼Œèº«ä»½è¯å·ï¼Œè½¦ç¥¨åºå·
     jsoni = js.dic
     print(jsoni)
 
@@ -616,11 +614,11 @@ def DetectBlueTrainTicket(box, filePath):
     return json.dumps(jsoni).encode().decode("unicode-escape")
 
 
-def DetectVATInvoice(box, symbol, filePath):  # Ê¶±ğÔöÖµË°·¢Æ±ÖÖÀà1
+def DetectVATInvoice(box, symbol, filePath):  # è¯†åˆ«å¢å€¼ç¨å‘ç¥¨ç§ç±»1
 
-    # ¶¨Î»¶şÎ¬Âë
+    # å®šä½äºŒç»´ç 
 
-    # ¶¨Î»¡Á
+    # å®šä½Ã—
 
     dic = xmlToDict.XmlTodict('ModeLabel_00001.xml')
 
@@ -643,9 +641,9 @@ def DetectVATInvoice(box, symbol, filePath):  # Ê¶±ğÔöÖµË°·¢Æ±ÖÖÀà1
 
 
 def DetectRedTrainTicket(box, filePath):
-    # ºìÉ«³µÆ±Ê¶±ğ
+    # çº¢è‰²è½¦ç¥¨è¯†åˆ«
 
-    # Æğµã
+    # èµ·ç‚¹
     templetStStartPlace = [[29, 74], [247, 128]]
     secP1 = MakeFileM(templetStStartPlace, box, filePath, 'StartPlace')
     result1 = OcrPic(secP1)
@@ -654,58 +652,58 @@ def DetectRedTrainTicket(box, filePath):
     secP2 = MakeFileM(templetStEndPlace, box, filePath, 'EndPlace')
     result2 = OcrPic(secP2)
 
-    # ³µ´Î
+    # è½¦æ¬¡
     templetStTrainNum = [[230, 65], [433, 127]]
     secP3 = MakeFileM(templetStTrainNum, box, filePath, 'trainNum')
     result3 = OcrPic(secP3)
 
-    # ³Ë¿ÍĞÅÏ¢
+    # ä¹˜å®¢ä¿¡æ¯
     templetStPassagerInfo = [[0, 343], [350, 388]]
     secP4 = MakeFileM(templetStPassagerInfo, box, filePath, 'PassagerInfo')
     result4 = OcrPic(secP4)
 
-    # ³Ë¿ÍĞÅÏ¢name
+    # ä¹˜å®¢ä¿¡æ¯name
     '''templetStPassagerInfoName = [[0, 343], [350, 388]]
     secP4_1 = MakeFileM(templetStPassagerInfoName, box, filePath, 'PassagerInfo')
     result4_1 = OcrPic(secP4_1)
     '''
 
-    # ³µ´ÎÊ±¼ä
+    # è½¦æ¬¡æ—¶é—´
     templetStTrainTime = [[0, 163], [357, 204]]
     secP5 = MakeFileM(templetStTrainTime, box, filePath, 'trainTime')
     result5 = OcrPic(secP5)
 
-    # ×ùÎ»
+    # åº§ä½
     templetStSeatNum = [[392, 164], [595, 210]]
     secP6 = MakeFileM(templetStSeatNum, box, filePath, "seatNum")
     result6 = OcrPic(secP6)
 
-    # ×ù´ÎÀàĞÍ
+    # åº§æ¬¡ç±»å‹
     templetStSeatType = [[425, 211], [552, 254]]
     secP7 = MakeFileM(templetStSeatType, box, filePath, "seatType")
     result7 = OcrPic(secP7)
 
-    # ³µºÅ
+    # è½¦å·
     templetStCheckNum = [[34, 40], [236, 87]]
     secP8 = MakeFileM(templetStCheckNum, box, filePath, "trainNo")
     result8 = OcrPic(secP8)
 
-    # Æ±¼Û
+    # ç¥¨ä»·
     templetStPrice = [[3, 206], [215, 258]]
     secP9 = MakeFileM(templetStPrice, box, filePath, "price")
     result9 = OcrPic(secP9)
 
-    # ³µ´ÎÂë
+    # è½¦æ¬¡ç 
     templetStPrice = [[0, 388], [319, 428]]
     secP10 = MakeFileM(templetStPrice, box, filePath, "TraintNoNum")
     result10 = OcrPic(secP10)
 
     '''
-    line1 = "ÆğµãÕ¾:   " + result1 + "\t    ÖÕµãÕ¾: " + result2
-    line2 = "³µ´Î£º    " + result3 + "\t    ³µ´ÎÊ±¼ä:" + result5
-    line3 = "³Ë¿ÍĞÅÏ¢£º " + result4 + "\t    ×ùÎ»:" + result6 + "\t    ×ù´ÎÀàĞÍ:" + result7
-    line4 = "³µºÅ£º    " + result8 + "\t    Æ±¼Û:" + result9
-    line5 = "³µ´ÎÂë:   " + result10
+    line1 = "èµ·ç‚¹ç«™:   " + result1 + "\t    ç»ˆç‚¹ç«™: " + result2
+    line2 = "è½¦æ¬¡ï¼š    " + result3 + "\t    è½¦æ¬¡æ—¶é—´:" + result5
+    line3 = "ä¹˜å®¢ä¿¡æ¯ï¼š " + result4 + "\t    åº§ä½:" + result6 + "\t    åº§æ¬¡ç±»å‹:" + result7
+    line4 = "è½¦å·ï¼š    " + result8 + "\t    ç¥¨ä»·:" + result9
+    line5 = "è½¦æ¬¡ç :   " + result10
 
     {
         'departCity':[29,74,247-29,128-74],
@@ -729,7 +727,7 @@ def DetectRedTrainTicket(box, filePath):
     print(line4)
     print(line5)
     '''
-    # ºó½ÃÕı
+    # åçŸ«æ­£
     pC = SemanticCorrect.posteriorCrt.posteriorCrt()
     pC.setTrainTicketPara(result1, result2, result3, result5, result6, result4,
                           '',
@@ -741,7 +739,7 @@ def DetectRedTrainTicket(box, filePath):
     js.addTrainCardInfo(pC.dic['departCity'], pC.dic['arriveCity'], pC.dic['trainNumber'], pC.dic['invoiceDate'],
                         pC.dic['price'], pC.dic[
                             'seatNum'], '', pC.dic['idNum'], result10, '0000',
-                        '0000')  # Ê¼·¢Õ¾£¬ÖÕµ½Õ¾£¬³µ´Î£¬ÈÕÆÚ£¬½ğ¶î£¬×ùÎ»ºÅ£¬ĞÕÃû£¬Éí·İÖ¤ºÅ£¬³µÆ±ĞòºÅ
+                        '0000')  # å§‹å‘ç«™ï¼Œç»ˆåˆ°ç«™ï¼Œè½¦æ¬¡ï¼Œæ—¥æœŸï¼Œé‡‘é¢ï¼Œåº§ä½å·ï¼Œå§“åï¼Œèº«ä»½è¯å·ï¼Œè½¦ç¥¨åºå·
 
     jsoni = js.dic
 
@@ -761,7 +759,7 @@ def cropToOcr(filePath, recT, typeT, debug=False, isusebaidu=True):
             jwkj_get_filePath_fileName_fileExt(filePath)[0] + "/tmp/" + jwkj_get_filePath_fileName_fileExt(filePath)[
                 1])
 
-    # ¼ÓÔØ×ÔÊ¶±ğocrÄ£ĞÍ£¨ÔöÖµË°×¨Æ±Ä£ĞÍ£©¿ÉÉèÖÃtypeTÎª11¼ÓÔØ
+    # åŠ è½½è‡ªè¯†åˆ«ocræ¨¡å‹ï¼ˆå¢å€¼ç¨ä¸“ç¥¨æ¨¡å‹ï¼‰å¯è®¾ç½®typeTä¸º11åŠ è½½
     for x in recT:
         sp = img.crop((recT[x][0], recT[x][1], recT[x][0] + recT[x][2], recT[x][1] + recT[x][3]))
 
@@ -772,13 +770,16 @@ def cropToOcr(filePath, recT, typeT, debug=False, isusebaidu=True):
 
         if debug == False:
             # if (x != 'invoiceNo'):
-            # # ²âÊÔÈç´ËÊ¶±ğ²¢²»ÄÜĞŞÕı×ÖÌå²»ÄÜÊ¶±ğµÄÎÊÌâ
+            # # æµ‹è¯•å¦‚æ­¤è¯†åˆ«å¹¶ä¸èƒ½ä¿®æ­£å­—ä½“ä¸èƒ½è¯†åˆ«çš„é—®é¢˜
             isusebaidu = False
             if isusebaidu:
                 midResult = OcrPic(sFPN)
             else:
-                print("==============================Using OCR3=========================")
-                midResult = connecter.OCR(sFPN, 'normal', 'verifyCode')
+                print("==============================Using train model=========================")
+                #é é é é é é verifyCodeé é é 
+                midResult = connecter.OCR(sFPN, 'train', 'verifyCode')
+                midResult = midResult.replace("ï¼š",":")
+
             # else:
             #     midResult = OcrNoPic(sFPN)
 
@@ -788,9 +789,12 @@ def cropToOcr(filePath, recT, typeT, debug=False, isusebaidu=True):
     print(ocrResult)
     pC = SemanticCorrect.posteriorCrt.posteriorCrt()
 
+    #é’ˆå¯¹æ—¶é—´çš„åçŸ«æ­£å¹´ä»½æ€»ä»¥ 2 å¼€å¤´ 2019.08.23 wt
+    ocrResult["invoiceDate"] = '2' + ocrResult["invoiceDate"][1:]
+
     if typeT == 11 and debug == False:
         import OcrForVat
-        if ocrResult['invoiceDate'][:4] == '¿ªÆ±ÈÕÆÚ' or len(ocrResult['invoiceDate']) < 4:
+        if ocrResult['invoiceDate'][:4] == 'å¼€ç¥¨æ—¥æœŸ' or len(ocrResult['invoiceDate']) < 4:
             recT['invoiceDate'] = OcrForVat.mubanDetectInvoiceDate(filePath)['invoiceDate']
             sp = img.crop((recT['invoiceDate'][0], recT['invoiceDate'][1],
                            recT['invoiceDate'][0] + recT['invoiceDate'][2],
@@ -824,10 +828,10 @@ def cropToOcr(filePath, recT, typeT, debug=False, isusebaidu=True):
 
 
 def detect(filePath, recT, type):
-    # µ÷ÓÃ½Ó¿Ú
-    # type:1 À¶»ğ³µÆ±
-    # type:2 ºì»ğ³µÆ±
-    # type:3 ·¢Æ±
+    # è°ƒç”¨æ¥å£
+    # type:1 è“ç«è½¦ç¥¨
+    # type:2 çº¢ç«è½¦ç¥¨
+    # type:3 å‘ç¥¨
     if os.access(filePath, os.F_OK):
         if type == 1:
             box = Detect.detect(cv2.imread(filePath), 1)
@@ -856,24 +860,24 @@ def __init__():
     chooseMod = 1
     if len(sys.argv) > 1:
         filePath = sys.argv[1]
-        print("Ê¶±ğÎÄ¼şfilePath:" + filePath)
+        print("è¯†åˆ«æ–‡ä»¶filePath:" + filePath)
 
         if len(sys.argv) > 2:
             if sys.argv[2] == '1':
                 chooseMod = 1
-            # Ä¬ÈÏÀ¶É«»ğ³µÆ±
+            # é»˜è®¤è“è‰²ç«è½¦ç¥¨
             if sys.argv[2] == '2':
                 chooseMod = 2
                 print("mod:" + str(chooseMod))
-                # ºìÉ«»ğ³µÆ±
+                # çº¢è‰²ç«è½¦ç¥¨
             if sys.argv[2] == '11':
                 chooseMod = 3
-                # ×¨ÓÃÔöÖµË°·¢Æ±1
+                # ä¸“ç”¨å¢å€¼ç¨å‘ç¥¨1
 
     else:
         filePath = 'Image_00066.jpg'
-        print("Ê¶±ğÎÄ¼şfilePath:")
-        print("Ä¬ÈÏÎÄ¼ş£ºImage_00068.jpg")
+        print("è¯†åˆ«æ–‡ä»¶filePath:")
+        print("é»˜è®¤æ–‡ä»¶ï¼šImage_00068.jpg")
 
     if os.access(filePath, os.F_OK):
         if chooseMod == 1:

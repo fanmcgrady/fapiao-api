@@ -356,6 +356,12 @@
                 if (arg.status) {
                     if (arg.result === '01') {
                         tr.append($('<td><p class="label label-primary">增值税专用发票<p/></td>'));
+                    } else if (arg.result === '92') {
+	                    tr.append($('<td><p class="label label-primary">火车票<p/></td>')); 
+	                } else if (arg.result === '93') {
+	                    tr.append($('<td><p class="label label-primary">飞机票<p/></td>'));
+	                } else if (arg.result === '95') {
+	                    tr.append($('<td><p class="label label-primary">定额发票<p/></td>'));                   
                     } else {
                         tr.append($('<td><p class="label label-primary">其他类型<p/></td>'));
                     }

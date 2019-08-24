@@ -521,17 +521,21 @@ def pic2005(request):
         return render(request, '2005.html', {'img_list': img_list})
     # 上报错误信息
     elif request.method == "POST":
-        obj = request.FILES.get('fapiao')
-
-        # 随机文件名
-        filename = generate_random_name()
-
-        file_path = os.path.join('2005-do-not-delete', filename)
-        full_path = os.path.join('allstatic', file_path)
-        f = open(full_path, 'wb')
-        for chunk in obj.chunks():
-            f.write(chunk)
-        f.close()
+        try:
+            obj = request.FILES.get('fapiao')
+    
+            # 随机文件名
+            filename = generate_random_name()
+	
+            file_path = os.path.join('2005-do-not-delete', filename[0])
+            full_path = os.path.join('allstatic', file_path)
+            f = open(full_path, 'wb')
+            for chunk in obj.chunks():
+                f.write(chunk)
+            f.close()
+        except Exception as e:
+            traceback.print_exc()
+            
         try:
             ret = {'status': True}
         except Exception as e:

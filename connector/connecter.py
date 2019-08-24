@@ -1,5 +1,8 @@
 from OCR import OCR2 as ocrVat
 from OCR import OCR3 as veryVat
+import sys
+sys.path.append("/home/ocr/organize/OCR/OCR_ticket")
+from OCR.OCR_ticket import predict
 import keras.backend.tensorflow_backend as K
 import time
 
@@ -26,6 +29,8 @@ def OCR(image_path, typeP, attribute, thresholding = 160):
         if typeP == 'normal' and attribute == 'verifyCode':
             print('model:    3_global_model')
             out, _ = veryVat.predict(image_path, verify_global_model)
+        elif typeP == 'train':
+            out = predict.predict_single(image_path)
         else:
             print('model:    global_model')
             out, _ = ocrVat.predict(image_path, global_model)

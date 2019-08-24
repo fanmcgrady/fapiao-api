@@ -114,11 +114,11 @@
                 <!-- Page-Title -->
                 <div class="row">
                     <div class="col-sm-12">
-                        <h4 class="pull-left page-title">增值税发票识别展示</h4>
+                        <h4 class="pull-left page-title">票据信息识别展示</h4>
                         <ol class="breadcrumb pull-right">
                             <li><a href="/">首页</a></li>
                             <li><a href="/old">原入口</a></li>
-                            <li class="active">增值税发票识别</li>
+                            <li class="active">票据信息识别</li>
                         </ol>
                     </div>
                 </div>
@@ -374,30 +374,34 @@
                         // 向结果数组加入数据
                         resultData.push(data);
 
-                        // 火车票
+						// 火车票
                         if (arg.type === '92') {
                             tr.append(
                                 $('<td></td>')
-                                    .append($("<p></p>").text("乘车区间：" + invoice.departCity + "-" + invoice.arriveCity))
+//                                     .append($("<p></p>").text("乘车区间：" + invoice.departCity + "-" + invoice.arriveCity))
                                     .append($("<p></p>").text("车次：" + invoice.trainNumber))
-                                    .append($("<p></p>").text("姓名：" + invoice.passenger))
-                                    .append($("<p></p>").text("身份证：" + invoice.idNum))
+//                                     .append($("<p></p>").text("姓名：" + invoice.passenger))
+//                                     .append($("<p></p>").text("身份证：" + invoice.idNum))
                                     .append($("<p></p>").text("日期： " + invoice.invoiceDate))
                                     .append($("<p></p>").text("金额： " + invoice.totalAmount))
-                                    .append($("<p></p>").text("票号： " + invoice.ticketsNum))
+//                                     .append($("<p></p>").text("票号： " + invoice.ticketsNum))
+
                             );
-                        } else {
+                        }
+                        else{
                             tr.append(
                                 $('<td></td>')
                                     .append($("<p></p>").text("发票代码：" + invoice.invoiceCode))
                                     .append($("<p></p>").text("发票号码：" + invoice.invoiceNo))
                                     .append($("<p></p>").text("发票日期：" + invoice.invoiceDate))
                                     .append($("<p></p>").text("不含税金额：" + invoice.invoiceAmount))
-                                    .append($("<p></P>").text("校验码： " + invoice.verifyCode))
+                                    .append($("<p></P>").text("校验码： "+ invoice.verifyCode))
                                     .append($("<p></p>").html(arg.timer))
                             );
                         }
-                    } else {
+                    }
+                    
+                    else {
                         var td = $('<td colspan="2"></td>');
                         td.append($("<p></p>").html("该发票类型暂不识别：" + arg.type));
                         tr.append(td);
