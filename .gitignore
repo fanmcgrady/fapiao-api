@@ -1,5 +1,7 @@
 .idea/*
 allstatic/upload/*
 allstatic/out/*
+allstatic/out/tmp/*
 allstatic/line/*
+*.jpg
 *.pyc
