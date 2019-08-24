@@ -9,12 +9,14 @@ import caffe
 import cv2
 import numpy as np
 from PIL import Image
+import matplotlib.pyplot as pl
 
 # import fp
 import fp.TextBoxes.recog_invoice_type
 from connector import flow, connecter
 from connector.TicToc import Timer
 from home import views
+import Ocr
 
 
 def jwkj_get_filePath_fileName_fileExt(filename):  # 提取路径
@@ -183,6 +185,7 @@ def newMubanDetect(filepath, typeP='normal', timer=None):
 
     pipe(im)
     timer.toc(content="行提取")
+    print("行提取结束")
 
     attributeLine = {}
 
@@ -204,11 +207,18 @@ def newMubanDetect(filepath, typeP='normal', timer=None):
         if not pipe.predict(atb) is None:
             attributeLine[atbDic[atb]] = list(pipe.predict(atb))
 
+    if len(attributeLine["verifyCode"]) == 0:
+        del attributeLine["verifyCode"]
+        typeP = "special"
+
     wAxis = 0.02
     hAxis = 0.1
+    print(typeP)
+    print("校验码位数判断")
+    print(attributeLine)
 
     for c in attributeLine:
-        # print(attributeLine[c])
+        print(attributeLine[c])
         if c in ['invoiceNo', 'invoiceAmount']:
             continue
 
@@ -259,6 +269,15 @@ def newMubanDetect(filepath, typeP='normal', timer=None):
     cv2.imwrite(surfaceImagePath, pipe.surface_image)
     filepathS = surfaceImagePath
 
+    # 2019.07.20 王韬 适当降低 invoiceNo 项的高度
+    try:
+        noHight = attributeLine['invoiceNoS'][3] - attributeLine['invoiceNoS'][1]
+        attributeLine['invoiceNoS'][1] -= int(0.075*noHight)
+        attributeLine['invoiceNoS'][3] += int(0.15*noHight)
+        print(attributeLine, "--------")
+    except Exception as e:
+        print(e)
+
     plt_rects = []
     for x in attributeLine:
         if x == 'verifyCode' and len(attributeLine[x]) == 2:
@@ -289,25 +308,26 @@ def newMubanDetect(filepath, typeP='normal', timer=None):
     return jsonResult, timer, '01'
 
 
-# def scanQRc(filepath):
-#     image = cv2.imread(filepath, 0)
-#
-#     str_info, position, state = recog_qrcode(image, roi=None)
-#     print("info:", str_info)
-#     print("pos:", position)
-#
-#     # ***** if conventnal method is invalid ******
-#     # ***** then use the enhanced method   *******
-#     if str_info is '':
-#         height, width = image.shape[:2]
-#         roi = [0, 0, int(width / 4), int(height / 4)]
-#         # roi = None
-#         str_info, position, state = recog_qrcode_ex(image, roi)
-#         print("info(ex):", str_info)
-#         print("pos(ex):", position)
-#     # ***** **************************************
-#
-#     return str_info, position
+def scanQRc(filepath):
+    image = cv2.imread(filepath, 0)
+    from scanQRCode.scan_qrcode import recog_qrcode, recog_qrcode_ex
+
+    str_info, position, state = recog_qrcode(image, roi=None)
+    print("info:", str_info)
+    print("pos:", position)
+
+    # ***** if conventnal method is invalid ******
+    # ***** then use the enhanced method   *******
+    if str_info is '':
+        height, width = image.shape[:2]
+        roi = [0, 0, int(width / 4), int(height / 4)]
+        # roi = None
+        str_info, position, state = recog_qrcode_ex(image, roi)
+        print("info(ex):", str_info)
+        print("pos(ex):", position)
+    # ***** **************************************
+
+    return str_info, position
 
 
 def getArrayFromStr(strRes):
@@ -321,7 +341,6 @@ def getArrayFromStr(strRes):
     resultArray.append(sR)
     return resultArray
 
-
 def init(filepath):
     '''
     mage = cv2.imread(filepath,0)
@@ -333,7 +352,8 @@ def init(filepath):
     timer = Timer()
     timer.tic()
 
-    recog = fp.TextBoxes.recog_invoice_type.InvoiTypeRecog()
+    #recog = fp.TextBoxes.recog_invoice_type.InvoiTypeRecog()
+    recog = views.global_recog
     ## load image with OpenCV
     im = cv2.imread(filepath)
     im = cv2.resize(im, (448, 448))
@@ -359,10 +379,44 @@ def init(filepath):
     # 注：增值税票目前不能区分具体种类，可统一返回01
 
     # 201907706 返回：['quota', 'airticket', 'special', 'trainticket']
+    print("发票类型识别：",typeP)
     if typeP == '01':
-        return newMubanDetect(filepath, 'normal', timer)
+        res = scanQRc(filepath)
+        timer.toc(content="二维码识别")
+        
+        if res[0] != '':
+            # 显示二维码
+            plt_rects = []
+            plt_rects.append(
+                [res[1][1][0],
+                 res[1][1][1],
+                 res[1][3][0] - res[1][0][0],
+                 res[1][0][1] - res[1][1][1]])
+            # 显示
+            vis_textline0 = fp.util.visualize.rects(cv2.imread(filepath, 0), plt_rects)
+            # 运行代码需要如下部分
+            pl.imshow(vis_textline0)
+            # 保存到line目录
+            pltpath = filepath.replace("upload", "line")
+            try:
+                pl.savefig(pltpath)
+            except Exception as e:
+                print("绘制行提取图片不支持bmp格式：{}".format(e))
+        
+            resArray = getArrayFromStr(res[0])
+            print(resArray)
+            js = InterfaceType.JsonInterface.invoice()
+            js.setVATInvoiceFromArray(resArray, typeP)
+        
+            jsoni = js.dic
+            print(jsoni)
+            return json.dumps(jsoni).encode().decode("unicode-escape"), timer, typeP
+        else:
+            return newMubanDetect(filepath, 'normal', timer)
+        #return newMubanDetect(filepath, 'normal', timer)
     elif typeP == '92':
-        return {}, timer, typeP
+        print("train tk ocr begin")
+        return Ocr.init(filepath, 'blue')[0], timer, typeP
     else:
         return "", timer, typeP
 
