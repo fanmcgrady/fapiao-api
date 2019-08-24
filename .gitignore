@@ -1,1 +1,4 @@
 .idea/*
+allstatic/upload/*
+allstatic/out/*
+allstatic/line/*
