@@ -528,7 +528,7 @@ def getVersion(request):
         with open("/home/ocr/version") as f:
             version = json.loads(f.readline())
             logs = f.read()
-            logs = logs[logs.find("更新日志"):]
+            logs = logs[logs.find("更新日志"):].replace("\n", "<br>")
 
         ret = {
             "version": version,
