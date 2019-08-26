@@ -39,8 +39,7 @@ urlpatterns = [
     url(r"^detect$", home_views.detect),
     url(r"^ocrForSpecVat$", home_views.ocrForSpecVat),
 
-    # 系统外功能
-    # 上传其他图片
-    url(r"^pic2005$", home_views.pic2005)
+    # 版本
+    url(r"^getVersion$", home_views.getVersion)
 ]
 

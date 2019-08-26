@@ -1,19 +1,19 @@
-import cv2
 import os
-
 # 分类
 # 加载fp
 import shutil
 import sys
 import zipfile
 
-import os
+import cv2
+
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 
 # sys.path.append("/home/ocr/fapiao/fp")
 sys.path.append("/home/ocr/organize")
 
 from fp.TextBoxes import recog_invoice_type
+
 ## 预加载发票类型识别
 global_recog = recog_invoice_type.InvoiTypeRecog()
 
@@ -34,14 +34,18 @@ detr = fp.multi.muldetect.DetectMultiFp()
 import OcrForSpecVat
 
 from connector import PipelineInit
+
 global_pipeline = PipelineInit.PipelineInit()
+
 
 # 票面识别
 def detect(request):
     return render(request, 'detect.html')
 
+
 def index(request):
     return render(request, 'index.html')
+
 
 # 专票统一入口
 def ocrForSpecVat(request):
@@ -82,6 +86,7 @@ def ocrForSpecVat(request):
             ret = {'status': False, 'path': file_path, 'result': str(e)}
 
         return HttpResponse(json.dumps(ret))
+
 
 # 多发票检测
 def multi(request):
@@ -162,6 +167,7 @@ def testType(request):
             traceback.print_exc()
 
         return HttpResponse(json.dumps(ret))
+
 
 # 批量上传获取文件列表
 def getFileList(request):
@@ -310,6 +316,7 @@ def QR_API(request):
 
         return JsonResponse(ret)
 
+
 def Type_API(request):
     if request.method == "POST":
         try:
@@ -381,6 +388,7 @@ def Type_API(request):
 
         return JsonResponse(ret)
 
+
 def Detect_API(request):
     if request.method == "POST":
         try:
@@ -444,6 +452,7 @@ def Detect_API(request):
 
         return JsonResponse(ret)
 
+
 # 多发票检测接口
 def Multi_API(request):
     if request.method == "POST":
@@ -501,6 +510,7 @@ def Multi_API(request):
 
         return JsonResponse(ret)
 
+
 # 按日期生成文件名
 def generate_random_name(file_name=None):
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
@@ -512,33 +522,17 @@ def generate_random_name(file_name=None):
 
     return timestamp + ext, timestamp
 
-def pic2005(request):
-    if request.method == 'GET':
-        files = os.listdir("allstatic/2005-do-not-delete")
-        img_list = []
-        for f in files:
-            img_list.append("2005-do-not-delete/" + f)
-        return render(request, '2005.html', {'img_list': img_list})
-    # 上报错误信息
-    elif request.method == "POST":
-        try:
-            obj = request.FILES.get('fapiao')
-    
-            # 随机文件名
-            filename = generate_random_name()
-	
-            file_path = os.path.join('2005-do-not-delete', filename[0])
-            full_path = os.path.join('allstatic', file_path)
-            f = open(full_path, 'wb')
-            for chunk in obj.chunks():
-                f.write(chunk)
-            f.close()
-        except Exception as e:
-            traceback.print_exc()
-            
-        try:
-            ret = {'status': True}
-        except Exception as e:
-            ret = {'status': False}
 
-        return HttpResponse(json.dumps(ret))
+def getVersion(request):
+    if request.method == 'GET':
+        with open("/home/ocr/version") as f:
+            version = json.loads(f.readline())
+            logs = f.read()
+            logs = logs[logs.find("更新日志"):]
+
+        ret = {
+            "version": version,
+            "logs": logs
+        }
+
+        return JsonResponse(ret)

@@ -238,16 +238,22 @@
                     <div class="col-md-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">操作说明</h3>
+                                <h3 class="panel-title">
+                                    当前版本：<span id="version"></span>
+                                    更新日期：<span id="versionDate"></span>
+                                </h3>
                             </div>
                             <div class="panel-body">
-                                <ol>
-                                    <li>选择文件。</li>
-                                    <li>点击“<span class="text-primary">识别</span>”按钮，开始识别。</li>
-                                    <li>分析完成后页面下方将显示结果。</li>
-                                    <li>IE低版本浏览器下存在兼容性问题，建议使用“<span class="text-primary">Chrome浏览器、Firefox浏览器、其他一些国产浏览器的"极速模式"</span>”。</li>
-                                    <li><span class="text-success">系统服务器采用深度学习超级计算机：NVIDIA DGX 工作站</span></li>
-                                </ol>
+                                <!--<ol>-->
+                                    <!--<li>选择文件。</li>-->
+                                    <!--<li>点击“<span class="text-primary">识别</span>”按钮，开始识别。</li>-->
+                                    <!--<li>分析完成后页面下方将显示结果。</li>-->
+                                    <!--<li>IE低版本浏览器下存在兼容性问题，建议使用“<span class="text-primary">Chrome浏览器、Firefox浏览器、其他一些国产浏览器的"极速模式"</span>”。</li>-->
+                                    <!--<li><span class="text-success">系统服务器采用深度学习超级计算机：NVIDIA DGX 工作站</span></li>-->
+                                <!--</ol>-->
+                                <span id="logs">
+
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -292,6 +298,28 @@
 <script src="static/blue/assets/datatables/dataTables.bootstrap.js"></script>
 <script src="static/blue/assets/jquery-datatables-editable/datatables.editable.init.js"></script>
 <script type="text/javascript" src="static/blue/assets/spinner/spinner.min.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        getVersion();
+    });
+
+    function getVersion() {
+
+        $.ajax({
+            url: '/getVersion',
+            type: 'GET',
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'JSON',
+            success: function (arg) {
+                console.log(arg);
+                $("#version").text(arg.version.version);
+                $("#versionDate").text(arg.version.date);
+                $("#logs").text(arg.logs);
+            }
+        })
+    }
+</script>
 
 </body>
 </html>
