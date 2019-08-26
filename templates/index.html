@@ -234,7 +234,7 @@
                     <!--</div>-->
                 <!--</div>-->
 
-                <div class="row">
+                <div class="row" id="update-logs">
                     <div class="col-md-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -315,7 +315,7 @@
                 console.log(arg);
                 $("#version").text(arg.version.version);
                 $("#versionDate").text(arg.version.date);
-                $("#logs").text(arg.logs);
+                $("#logs").html(arg.logs);
             }
         })
     }
