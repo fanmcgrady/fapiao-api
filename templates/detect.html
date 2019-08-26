@@ -541,8 +541,24 @@
 
         jQuery("#btn-local-path").click(switchInput);
         jQuery("#btn-download").click(saveJson);
+
+        getVersion();
     });
 
+    function getVersion() {
+        $.ajax({
+            url: '/getVersion',
+            type: 'GET',
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            dataType: 'JSON',
+            success: function (arg) {
+                $("#version").text(arg.version.version);
+                $("#versionDate").text(arg.version.date);
+                // $("#logs").html(arg.logs);
+            }
+        })
+    }
 
 </script>
 </body>
