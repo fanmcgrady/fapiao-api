@@ -5,7 +5,7 @@ import time
 
 import InterfaceType
 import SemanticCorrect.posteriorCrt
-import caffe
+#import caffe
 import cv2
 import numpy as np
 from PIL import Image
@@ -145,6 +145,17 @@ def CropPic(filePath, recT, origin_filePath, typeP, debug=False, isusebaidu=Fals
                     elif len(midResult) == 12 and typeP == "normal":
                         if midResult[0] not in ['0', '1', '2']:
                             midResult = midResult[-10:]
+                    # wt 2019.10.08 十位的发票代码可以由第8位区分专普票 1为专票 3为普票 十二位代码由最后两位（11、12）位区分 04、05为普票
+                    # 信息来自税务局官网 http://www.chinatax.gov.cn/chinatax/n810214/n810641/n2985871/n2985898/n2986028/c2997098/content.html
+                    if (len(midResult) == 10 and midResult[7] == 3) or (len(midResult) == 12 and midResult[-2:] == "04") or (len(midResult) == 12 and midResult[-2:] == "05"):
+                        typeP = "normal"
+                    else:
+                        typeP = "special"
+                # wt 2019.09.12 公司名称项中文识别 wt 2019.09.26 新增发票标题识别; 2019.10.08 用发票代码区分专普票，故发票标题识别关闭
+                # elif x == 'salerName' or x == 'buyerName' or x == 'invoiceTitle':
+                elif x == 'salerName' or x == 'buyerName':
+                    midResult = connecter.ChiOcr(sFPN)
+                    print("Chi ocr end...")
                 else:
                     midResult = newOcr(sFPN, typeP, x)
 
@@ -155,6 +166,9 @@ def CropPic(filePath, recT, origin_filePath, typeP, debug=False, isusebaidu=Fals
     time6 = time.time()
     print('切图识别：    ' + str(time6 - time2))
 
+    # 新增发票类型返回
+    print("invoice typeP: ", typeP)
+    ocrResult['invoiceType'] = typeP
     print(ocrResult)
     pC = SemanticCorrect.posteriorCrt.posteriorCrt()
 
@@ -190,11 +204,14 @@ def newMubanDetect(filepath, typeP='normal', timer=None):
     attributeLine = {}
 
     atbDic = {
+        'buyer': 'buyerName',
+        'saler': 'salerName',
         'type': 'invoiceCode',
         'serial': 'invoiceNo',
         'time': 'invoiceDate',
         'tax_free_money': 'invoiceAmount',
         'serial_tiny': 'invoiceNoS'}
+        #'title': 'invoiceTitle'}
 
     if pipe.predict('verify') is not None:
         # 由于目前不论普票专票的分类结果都是spec_and_normal_bw，因此337行的处理结果都是Normal
@@ -206,6 +223,9 @@ def newMubanDetect(filepath, typeP='normal', timer=None):
     for atb in atbDic.keys():
         if not pipe.predict(atb) is None:
             attributeLine[atbDic[atb]] = list(pipe.predict(atb))
+            # wt 2019.09.12
+            if atb == "saler" or atb == "buyer":
+                attributeLine[atbDic[atb]] = list(attributeLine[atbDic[atb]][0])
 
     if len(attributeLine["verifyCode"]) == 0:
         del attributeLine["verifyCode"]
@@ -218,7 +238,7 @@ def newMubanDetect(filepath, typeP='normal', timer=None):
     print(attributeLine)
 
     for c in attributeLine:
-        print(attributeLine[c])
+        print(c," ",attributeLine[c])
         if c in ['invoiceNo', 'invoiceAmount']:
             continue
 
@@ -383,28 +403,34 @@ def init(filepath):
     if typeP == '01':
         res = scanQRc(filepath)
         timer.toc(content="二维码识别")
+        print("二维码识别调用结束")
         
         if res[0] != '':
             # 显示二维码
-            plt_rects = []
-            plt_rects.append(
-                [res[1][1][0],
-                 res[1][1][1],
-                 res[1][3][0] - res[1][0][0],
-                 res[1][0][1] - res[1][1][1]])
-            # 显示
-            vis_textline0 = fp.util.visualize.rects(cv2.imread(filepath, 0), plt_rects)
-            # 运行代码需要如下部分
-            pl.imshow(vis_textline0)
-            # 保存到line目录
+            # plt_rects = []
+            # plt_rects.append(
+            #     [res[1][1][0],
+            #      res[1][1][1],
+            #      res[1][3][0] - res[1][0][0],
+            #      res[1][0][1] - res[1][1][1]])
+            # # 显示
+            # vis_textline0 = fp.util.visualize.rects(cv2.imread(filepath, 0), plt_rects)
+            # # 运行代码需要如下部分
+            # pl.imshow(vis_textline0)
+            # # 保存到line目录
+            # pltpath = filepath.replace("upload", "line")
+            # try:
+            #     pl.savefig(pltpath)
+            # except Exception as e:
+            #     print("绘制行提取图片不支持bmp格式：{}".format(e))
+            
+            #关闭绘制二维码 wt 2019.10.19
             pltpath = filepath.replace("upload", "line")
-            try:
-                pl.savefig(pltpath)
-            except Exception as e:
-                print("绘制行提取图片不支持bmp格式：{}".format(e))
+            im = cv2.imread(filepath, 0)
+            cv2.imwrite(pltpath, im)
         
             resArray = getArrayFromStr(res[0])
-            print(resArray)
+            print("Loading json",resArray)
             js = InterfaceType.JsonInterface.invoice()
             js.setVATInvoiceFromArray(resArray, typeP)
         

@@ -14,6 +14,8 @@ import Detect
 import muban
 from connector import FindCircle, detectType, flow, PipeInvoice
 import xmlToDict
+import time
+from PIL import Image
 
 
 # 矫正 -> 行提取 -> ocr
@@ -24,11 +26,16 @@ def init(filename, typeP):
     if "allstatic" in filename:
         filename = filename.replace("allstatic/", "");
 
-    out_file, flag, attributeLine = surface(filename, typeP)
+    out_file, flag, attributeLine, ticketNo = surface(filename, typeP)
     print("cropToOcr begin")
 
+    #wt 2019.09.25 保存tickeNO
+    imgName = time.strftime('%Y-%m-%d %H_%M_%S',time.localtime(time.time()))
+    ticketNo = Image.fromarray(ticketNo)
+    ticketNo.save("/home/ocr/organize/TrianTicketNo/"+imgName+".jpg")
+
     # ocr和分词
-    jsonResult, origin = flow.cropToOcr(out_file, attributeLine, flag)
+    jsonResult, origin = flow.cropToOcr(out_file, attributeLine, flag, ticketNo)
     return jsonResult, origin
 
 
@@ -190,7 +197,8 @@ def surface(filename, typeP='blue'):
         print("绘制行提取图片不支持bmp格式：{}".format(e))
         pass
 
-    return midProcessResult[0], midProcessResult[1], attributeLine
+    # wt 2019.09.25 返回值新增火车票票号
+    return midProcessResult[0], midProcessResult[1], attributeLine,  midProcessResult[4]
 
 
 def textline(filepath):

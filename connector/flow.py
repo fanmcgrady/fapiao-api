@@ -748,7 +748,7 @@ def DetectRedTrainTicket(box, filePath):
     return json.dumps(jsoni).encode().decode("unicode-escape")
 
 
-def cropToOcr(filePath, recT, typeT, debug=False, isusebaidu=True):
+def cropToOcr(filePath, recT, typeT, ticketNo=None,  debug=False, isusebaidu=True):
     ocrResult = {}
     img = Image.open(filePath)
 
@@ -785,6 +785,13 @@ def cropToOcr(filePath, recT, typeT, debug=False, isusebaidu=True):
 
             print(midResult + '   isUseBaidu: ' + str(isusebaidu))
             ocrResult[x] = midResult
+
+    # wt 2019.09.25 火车票票号识别
+    sFPN = jwkj_get_filePath_fileName_fileExt(filePath)[0] + "/tmp/" + jwkj_get_filePath_fileName_fileExt(filePath)[
+            1] + "/" + jwkj_get_filePath_fileName_fileExt(filePath)[
+                   1] + "_" + "ticketNo" + ".jpg"
+    ticketNo.save(sFPN)
+    ocrResult['ticketNo'] = connecter.OCR(sFPN, 'normal', 'verifyCode')
 
     print(ocrResult)
     pC = SemanticCorrect.posteriorCrt.posteriorCrt()

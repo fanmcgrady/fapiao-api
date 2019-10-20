@@ -43,7 +43,8 @@ def getPipe(dset_root, file_name, type, idStandard=False):
 
         cdic = getDic(pipe.template.items())  # pipe templet
 
-        return out_filename, 1, pipe.textlines, cdic
+        # wt 2019.09.25 返回值新增火车票票号项 
+        return out_filename, 1, pipe.textlines, cdic, pipe.red_sn
         '''elif type == 'red':
         pipe = fp.train_ticket.TrainTicketPipeline('red', debug=False)
         im = cv2.imread(filepath, 1)
