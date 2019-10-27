@@ -393,17 +393,30 @@
                             );
                         }
                         else{
-                            tr.append(
-                                $('<td></td>')
-                                    .append($("<p></p>").text("发票代码：" + invoice.invoiceCode))
-                                    .append($("<p></p>").text("发票号码：" + invoice.invoiceNo))
-                                    .append($("<p></p>").text("发票日期：" + invoice.invoiceDate))
-                                    .append($("<p></p>").text("不含税金额：" + invoice.invoiceAmount))
-                                    .append($("<p></P>").text("校验码： "+ invoice.verifyCode))
-				    .append($("<p></P>").text("购买方名称： "+ invoice.buyerName))
-                                    .append($("<p></P>").text("销售方名称： "+ invoice.salerName))
-                                    .append($("<p></p>").html(arg.timer))
-                            );
+	                        if (invoice.invoiceType === 'special') {
+	                            tr.append(
+	                                $('<td></td>')
+	                                    .append($("<p></p>").text("发票代码：" + invoice.invoiceCode))
+	                                    .append($("<p></p>").text("发票号码：" + invoice.invoiceNo))
+	                                    .append($("<p></p>").text("发票日期：" + invoice.invoiceDate))
+	                                    .append($("<p></p>").text("不含税金额：" + invoice.invoiceAmount))
+										.append($("<p></P>").text("购买方名称： "+ invoice.buyerName))
+	                                    .append($("<p></P>").text("销售方名称： "+ invoice.salerName))
+	                                    .append($("<p></p>").html(arg.timer))
+	                            );
+	                        } else {
+		                        tr.append(
+	                                $('<td></td>')
+	                                    .append($("<p></p>").text("发票代码：" + invoice.invoiceCode))
+	                                    .append($("<p></p>").text("发票号码：" + invoice.invoiceNo))
+	                                    .append($("<p></p>").text("发票日期：" + invoice.invoiceDate))
+	                                    .append($("<p></p>").text("不含税金额：" + invoice.invoiceAmount))
+	                                    .append($("<p></P>").text("校验码： "+ invoice.verifyCode))
+										.append($("<p></P>").text("购买方名称： "+ invoice.buyerName))
+	                                    .append($("<p></P>").text("销售方名称： "+ invoice.salerName))
+	                                    .append($("<p></p>").html(arg.timer))
+	                            );
+	                        }
                         }
                     }
                     
